@@ -1,0 +1,31 @@
+{
+  "functions": {
+    "source": "functions",
+    "runtime": "nodejs20",
+    "predeploy": [
+      "npm --prefix \"$RESOURCE_DIR\" run lint"
+    ]
+  },
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "chapterone-ca208",
+          "appId": "1:1072561501064:android:022fca4794579e379b003d",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "chapterone-ca208",
+          "configurations": {
+            "android": "1:1072561501064:android:022fca4794579e379b003d",
+            "ios": "1:1072561501064:ios:e738b1f9513314749b003d",
+            "web": "1:1072561501064:web:64b30efb308d202a9b003d",
+            "windows": "1:1072561501064:web:2725ed55a2c708f49b003d"
+          }
+        }
+      }
+    }
+  }
+}
