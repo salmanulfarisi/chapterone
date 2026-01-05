@@ -16,7 +16,8 @@ final notificationServiceProvider = Provider<NotificationService>((ref) {
 class NotificationService {
   final ApiService _apiService;
   final FirebaseMessaging _messaging = FirebaseMessaging.instance;
-  final FlutterLocalNotificationsPlugin _localNotifications = FlutterLocalNotificationsPlugin();
+  final FlutterLocalNotificationsPlugin _localNotifications =
+      FlutterLocalNotificationsPlugin();
   String? _fcmToken;
 
   NotificationService(this._apiService);
@@ -24,7 +25,10 @@ class NotificationService {
   /// Initialize notification service
   Future<void> initialize() async {
     try {
-      Logger.info('Initializing notification service...', 'NotificationService');
+      Logger.info(
+        'Initializing notification service...',
+        'NotificationService',
+      );
 
       // Ensure Firebase is initialized
       if (Firebase.apps.isEmpty) {
@@ -44,7 +48,7 @@ class NotificationService {
       await _initializeLocalNotifications();
 
       // Request permission
-      NotificationSettings settings = await _messaging.requestPermission(
+      final NotificationSettings settings = await _messaging.requestPermission(
         alert: true,
         badge: true,
         sound: true,
@@ -96,7 +100,7 @@ class NotificationService {
           );
           _handleBackgroundMessage(message);
         });
-        
+
         // Check if app was opened from a notification
         final initialMessage = await _messaging.getInitialMessage();
         if (initialMessage != null) {
@@ -107,7 +111,10 @@ class NotificationService {
           _handleBackgroundMessage(initialMessage);
         }
 
-        Logger.info('Notification service initialized successfully', 'NotificationService');
+        Logger.info(
+          'Notification service initialized successfully',
+          'NotificationService',
+        );
       } else {
         Logger.warning(
           'Notification permission not granted. Status: ${settings.authorizationStatus}',
@@ -128,7 +135,9 @@ class NotificationService {
   Future<void> _initializeLocalNotifications() async {
     if (kIsWeb) return; // Local notifications not supported on web
 
-    const androidSettings = AndroidInitializationSettings('@mipmap/ic_launcher');
+    const androidSettings = AndroidInitializationSettings(
+      '@mipmap/ic_launcher',
+    );
     const iosSettings = DarwinInitializationSettings(
       requestAlertPermission: true,
       requestBadgePermission: true,
@@ -165,7 +174,8 @@ class NotificationService {
     const newChaptersChannel = AndroidNotificationChannel(
       'new_chapters', // channel id
       'New Chapters', // channel name
-      description: 'Notifications for new manga chapters', // channel description
+      description:
+          'Notifications for new manga chapters', // channel description
       importance: Importance.high,
       playSound: true,
       enableVibration: true,
@@ -184,7 +194,8 @@ class NotificationService {
     const adminChannel = AndroidNotificationChannel(
       'admin_notifications', // channel id
       'Admin Notifications', // channel name
-      description: 'Admin notifications for feedback and requests', // channel description
+      description:
+          'Admin notifications for feedback and requests', // channel description
       importance: Importance.high,
       playSound: true,
       enableVibration: true,
@@ -192,7 +203,8 @@ class NotificationService {
 
     final androidPlugin = _localNotifications
         .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>();
+          AndroidFlutterLocalNotificationsPlugin
+        >();
 
     await androidPlugin?.createNotificationChannel(newChaptersChannel);
     await androidPlugin?.createNotificationChannel(engagementChannel);
@@ -208,10 +220,7 @@ class NotificationService {
   Future<void> _saveTokenToServer(String token) async {
     try {
       Logger.debug('Saving FCM token to server', 'NotificationService');
-      await _apiService.post(
-        ApiConstants.userFcmToken,
-        data: {'token': token},
-      );
+      await _apiService.post(ApiConstants.userFcmToken, data: {'token': token});
       Logger.info('FCM token saved successfully', 'NotificationService');
     } catch (e) {
       Logger.error(
@@ -236,17 +245,20 @@ class NotificationService {
       final notification = message.notification!;
       final androidDetails = message.notification?.android;
       final data = message.data;
-      
+
       // Determine channel based on notification type
       String channelId = androidDetails?.channelId ?? 'new_chapters';
       String channelName = 'New Chapters';
       String channelDescription = 'Notifications for new manga chapters';
-      
-      if (data['notificationType'] == 'feedback' || data['type'] == 'admin_notification') {
+
+      if (data['notificationType'] == 'feedback' ||
+          data['type'] == 'admin_notification') {
         channelId = 'admin_notifications';
         channelName = 'Admin Notifications';
         channelDescription = 'Admin notifications for feedback and requests';
-      } else if (data['type'] == 'engagement' || data['type'] == 'comment' || data['type'] == 'reply') {
+      } else if (data['type'] == 'engagement' ||
+          data['type'] == 'comment' ||
+          data['type'] == 'reply') {
         channelId = 'engagement';
         channelName = 'Engagement';
         channelDescription = 'Engagement notifications';
@@ -283,7 +295,10 @@ class NotificationService {
           payload: message.data.toString(),
         );
 
-        Logger.debug('Local notification displayed successfully', 'NotificationService');
+        Logger.debug(
+          'Local notification displayed successfully',
+          'NotificationService',
+        );
       } catch (e, stackTrace) {
         Logger.error(
           'Error showing local notification: ${e.toString()}',
@@ -293,7 +308,10 @@ class NotificationService {
         );
       }
     } else {
-      Logger.debug('Message has no notification payload', 'NotificationService');
+      Logger.debug(
+        'Message has no notification payload',
+        'NotificationService',
+      );
     }
   }
 
@@ -306,7 +324,10 @@ class NotificationService {
     // Navigate to chapter if needed
     final data = message.data;
     if (data['type'] == 'new_chapter' && data['mangaId'] != null) {
-      Logger.debug('Navigating to chapter: ${data['mangaId']}', 'NotificationService');
+      Logger.debug(
+        'Navigating to chapter: ${data['mangaId']}',
+        'NotificationService',
+      );
       // Navigation will be handled by the app router
     }
   }
@@ -427,18 +448,18 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   try {
     // Note: Logger may not be available in background isolate, so we use minimal logging
     // In production, these logs won't appear but errors will be caught by Crashlytics
-    
+
     // Check if Firebase is already initialized
     if (Firebase.apps.isEmpty) {
       await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform,
       );
     }
-    
+
     // When app is in background, FCM automatically displays notifications
     // We just need to ensure the notification channel exists
     // The notification will be shown by the system automatically
-    
+
     // Note: For Android, when app is in background, FCM automatically shows
     // the notification using the channelId specified in the message.
     // No manual display needed - FCM handles it automatically.
@@ -448,4 +469,3 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
     // Note: stackTrace not available in background isolate without proper setup
   }
 }
-

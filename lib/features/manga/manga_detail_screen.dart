@@ -172,14 +172,14 @@ class _MangaDetailScreenState extends ConsumerState<MangaDetailScreen> {
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.lock, size: 48, color: AppTheme.primaryRed),
+            const Icon(Icons.lock, size: 48, color: AppTheme.primaryRed),
             const SizedBox(height: 16),
             Text(
               'Chapter ${chapter.chapterNumber} is locked',
               style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 8),
-            Text(
+            const Text(
               'Watch an ad to unlock this chapter',
               style: TextStyle(fontSize: 14, color: AppTheme.textSecondary),
               textAlign: TextAlign.center,
@@ -189,7 +189,7 @@ class _MangaDetailScreenState extends ConsumerState<MangaDetailScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogContext, false),
-            child: Text(
+            child: const Text(
               'Cancel',
               style: TextStyle(color: AppTheme.textSecondary),
             ),
@@ -276,10 +276,16 @@ class _MangaDetailScreenState extends ConsumerState<MangaDetailScreen> {
               // Wait for the provider to fetch fresh data
               try {
                 await ref.read(mangaChaptersProvider(widget.mangaId).future);
-                Logger.debug('Chapters refreshed after unlock', 'MangaDetailScreen');
+                Logger.debug(
+                  'Chapters refreshed after unlock',
+                  'MangaDetailScreen',
+                );
               } catch (e) {
                 // If refresh fails, still try to navigate
-                Logger.warning('Error refreshing chapters: $e', 'MangaDetailScreen');
+                Logger.warning(
+                  'Error refreshing chapters: $e',
+                  'MangaDetailScreen',
+                );
               }
 
               // Small delay to ensure UI updates
@@ -386,7 +392,7 @@ class _MangaDetailScreenState extends ConsumerState<MangaDetailScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.warning_amber_rounded,
                       size: 64,
                       color: AppTheme.primaryRed,
@@ -402,7 +408,7 @@ class _MangaDetailScreenState extends ConsumerState<MangaDetailScreen> {
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 12),
-                    Text(
+                    const Text(
                       'This content is restricted to users who are 18 years or older.',
                       style: TextStyle(
                         fontSize: 14,
@@ -914,11 +920,11 @@ class _MangaDetailScreenState extends ConsumerState<MangaDetailScreen> {
                                                         shouldBeLocked);
 
                                               if (isLocked) {
-                                                return Row(
+                                                return const Row(
                                                   mainAxisSize:
                                                       MainAxisSize.min,
                                                   children: [
-                                                    const SizedBox(width: 4),
+                                                    SizedBox(width: 4),
                                                     Icon(
                                                       Icons.lock,
                                                       size: 16,
@@ -1138,7 +1144,7 @@ class _MangaDetailScreenState extends ConsumerState<MangaDetailScreen> {
                                                               const SizedBox(
                                                                 width: 8,
                                                               ),
-                                                              Icon(
+                                                              const Icon(
                                                                 Icons.lock,
                                                                 size: 14,
                                                                 color: AppTheme
@@ -1389,16 +1395,19 @@ class _MangaDetailScreenState extends ConsumerState<MangaDetailScreen> {
                                                 height: 130,
                                                 width: 100,
                                                 fit: BoxFit.cover,
-                                                placeholder: (context, url) => Container(
-                                                  height: 130,
-                                                  width: 100,
-                                                  color: AppTheme.cardBackground,
-                                                  child: const Center(
-                                                    child: CircularProgressIndicator(
-                                                      strokeWidth: 2,
+                                                placeholder: (context, url) =>
+                                                    Container(
+                                                      height: 130,
+                                                      width: 100,
+                                                      color: AppTheme
+                                                          .cardBackground,
+                                                      child: const Center(
+                                                        child:
+                                                            CircularProgressIndicator(
+                                                              strokeWidth: 2,
+                                                            ),
+                                                      ),
                                                     ),
-                                                  ),
-                                                ),
                                                 errorWidget: (_, __, ___) =>
                                                     Container(
                                                       height: 130,

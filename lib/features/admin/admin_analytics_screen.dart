@@ -58,10 +58,12 @@ class _AdminAnalyticsScreenState extends ConsumerState<AdminAnalyticsScreen>
         ref.invalidate(adminUserActivityProvider(_userActivityTimeframe));
         break;
       case 2:
-        ref.invalidate(adminPopularContentProvider({
-          'timeframe': _popularContentTimeframe,
-          'limit': '10',
-        }));
+        ref.invalidate(
+          adminPopularContentProvider({
+            'timeframe': _popularContentTimeframe,
+            'limit': '10',
+          }),
+        );
         break;
       case 3:
         ref.invalidate(adminUserRetentionProvider(_retentionPeriod));
@@ -70,10 +72,12 @@ class _AdminAnalyticsScreenState extends ConsumerState<AdminAnalyticsScreen>
         ref.invalidate(adminRevenueProvider(_revenueTimeframe));
         break;
       case 5:
-        ref.invalidate(adminContentPerformanceProvider({
-          'timeframe': _contentPerformanceTimeframe,
-          'limit': '20',
-        }));
+        ref.invalidate(
+          adminContentPerformanceProvider({
+            'timeframe': _contentPerformanceTimeframe,
+            'limit': '20',
+          }),
+        );
         break;
     }
   }
@@ -137,7 +141,8 @@ class _AdminAnalyticsScreenState extends ConsumerState<AdminAnalyticsScreen>
               analytics['totalUsers'] ?? analytics['stats']?['totalUsers'] ?? 0;
           final totalManga =
               analytics['totalManga'] ?? analytics['stats']?['totalManga'] ?? 0;
-          final totalChapters = analytics['totalChapters'] ??
+          final totalChapters =
+              analytics['totalChapters'] ??
               analytics['stats']?['totalChapters'] ??
               0;
           final chartData = analytics['chartData'] ?? {};
@@ -275,7 +280,7 @@ class _AdminAnalyticsScreenState extends ConsumerState<AdminAnalyticsScreen>
                       ),
                     ),
                 ] else ...[
-                  EmptyState(
+                  const EmptyState(
                     title: 'No Chart Data',
                     message: 'Chart data will appear here once available',
                     icon: Icons.bar_chart,
@@ -296,7 +301,7 @@ class _AdminAnalyticsScreenState extends ConsumerState<AdminAnalyticsScreen>
                 color: AppTheme.textSecondary,
               ),
               const SizedBox(height: 16),
-              Text(
+              const Text(
                 'Error loading analytics',
                 style: TextStyle(color: AppTheme.textSecondary),
               ),
@@ -313,7 +318,9 @@ class _AdminAnalyticsScreenState extends ConsumerState<AdminAnalyticsScreen>
   }
 
   Widget _buildUserActivityTab() {
-    final activityAsync = ref.watch(adminUserActivityProvider(_userActivityTimeframe));
+    final activityAsync = ref.watch(
+      adminUserActivityProvider(_userActivityTimeframe),
+    );
 
     return RefreshIndicator(
       onRefresh: () async {
@@ -322,7 +329,7 @@ class _AdminAnalyticsScreenState extends ConsumerState<AdminAnalyticsScreen>
       child: activityAsync.when(
         data: (data) {
           if (data.isEmpty) {
-            return EmptyState(
+            return const EmptyState(
               title: 'No Activity Data',
               message: 'User activity data will appear here',
               icon: Icons.people_outline,
@@ -342,9 +349,18 @@ class _AdminAnalyticsScreenState extends ConsumerState<AdminAnalyticsScreen>
                       value: _userActivityTimeframe,
                       items: const [
                         DropdownMenuItem(value: '1h', child: Text('Last Hour')),
-                        DropdownMenuItem(value: '24h', child: Text('Last 24 Hours')),
-                        DropdownMenuItem(value: '7d', child: Text('Last 7 Days')),
-                        DropdownMenuItem(value: '30d', child: Text('Last 30 Days')),
+                        DropdownMenuItem(
+                          value: '24h',
+                          child: Text('Last 24 Hours'),
+                        ),
+                        DropdownMenuItem(
+                          value: '7d',
+                          child: Text('Last 7 Days'),
+                        ),
+                        DropdownMenuItem(
+                          value: '30d',
+                          child: Text('Last 30 Days'),
+                        ),
                       ],
                       onChanged: (value) {
                         if (value != null) {
@@ -421,7 +437,9 @@ class _AdminAnalyticsScreenState extends ConsumerState<AdminAnalyticsScreen>
                           const SizedBox(height: 16),
                           SizedBox(
                             height: 200,
-                            child: _buildHourlyBarChart(data['hourlyActivity'] ?? []),
+                            child: _buildHourlyBarChart(
+                              data['hourlyActivity'] ?? [],
+                            ),
                           ),
                         ],
                       ),
@@ -432,7 +450,7 @@ class _AdminAnalyticsScreenState extends ConsumerState<AdminAnalyticsScreen>
           );
         },
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stack) => EmptyState(
+        error: (error, stack) => const EmptyState(
           title: 'Error',
           message: 'Failed to load user activity',
           icon: Icons.error_outline,
@@ -442,17 +460,21 @@ class _AdminAnalyticsScreenState extends ConsumerState<AdminAnalyticsScreen>
   }
 
   Widget _buildPopularContentTab() {
-    final contentAsync = ref.watch(adminPopularContentProvider({
-      'timeframe': _popularContentTimeframe,
-      'limit': '10',
-    }));
+    final contentAsync = ref.watch(
+      adminPopularContentProvider({
+        'timeframe': _popularContentTimeframe,
+        'limit': '10',
+      }),
+    );
 
     return RefreshIndicator(
       onRefresh: () async {
-        ref.invalidate(adminPopularContentProvider({
-          'timeframe': _popularContentTimeframe,
-          'limit': '10',
-        }));
+        ref.invalidate(
+          adminPopularContentProvider({
+            'timeframe': _popularContentTimeframe,
+            'limit': '10',
+          }),
+        );
       },
       child: contentAsync.when(
         data: (data) {
@@ -468,17 +490,19 @@ class _AdminAnalyticsScreenState extends ConsumerState<AdminAnalyticsScreen>
                     color: AppTheme.textSecondary,
                   ),
                   const SizedBox(height: 16),
-                  Text(
+                  const Text(
                     'Failed to load popular content',
                     style: TextStyle(color: AppTheme.textSecondary),
                   ),
                   const SizedBox(height: 8),
                   ElevatedButton(
                     onPressed: () {
-                      ref.invalidate(adminPopularContentProvider({
-                        'timeframe': _popularContentTimeframe,
-                        'limit': '10',
-                      }));
+                      ref.invalidate(
+                        adminPopularContentProvider({
+                          'timeframe': _popularContentTimeframe,
+                          'limit': '10',
+                        }),
+                      );
                     },
                     child: const Text('Retry'),
                   ),
@@ -491,7 +515,7 @@ class _AdminAnalyticsScreenState extends ConsumerState<AdminAnalyticsScreen>
           final popularGenres = data['popularGenres'] as List<dynamic>? ?? [];
 
           if (popularManga.isEmpty && popularGenres.isEmpty) {
-            return EmptyState(
+            return const EmptyState(
               title: 'No Content Data',
               message: 'Popular content data will appear here',
               icon: Icons.trending_up,
@@ -510,17 +534,28 @@ class _AdminAnalyticsScreenState extends ConsumerState<AdminAnalyticsScreen>
                     DropdownButton<String>(
                       value: _popularContentTimeframe,
                       items: const [
-                        DropdownMenuItem(value: '7d', child: Text('Last 7 Days')),
-                        DropdownMenuItem(value: '30d', child: Text('Last 30 Days')),
-                        DropdownMenuItem(value: '90d', child: Text('Last 90 Days')),
+                        DropdownMenuItem(
+                          value: '7d',
+                          child: Text('Last 7 Days'),
+                        ),
+                        DropdownMenuItem(
+                          value: '30d',
+                          child: Text('Last 30 Days'),
+                        ),
+                        DropdownMenuItem(
+                          value: '90d',
+                          child: Text('Last 90 Days'),
+                        ),
                       ],
                       onChanged: (value) {
                         if (value != null) {
                           setState(() => _popularContentTimeframe = value);
-                          ref.invalidate(adminPopularContentProvider({
-                            'timeframe': value,
-                            'limit': '10',
-                          }));
+                          ref.invalidate(
+                            adminPopularContentProvider({
+                              'timeframe': value,
+                              'limit': '10',
+                            }),
+                          );
                         }
                       },
                     ),
@@ -548,9 +583,12 @@ class _AdminAnalyticsScreenState extends ConsumerState<AdminAnalyticsScreen>
                               placeholder: (context, url) => const SizedBox(
                                 width: 50,
                                 height: 70,
-                                child: Center(child: CircularProgressIndicator()),
+                                child: Center(
+                                  child: CircularProgressIndicator(),
+                                ),
                               ),
-                              errorWidget: (context, url, error) => const Icon(Icons.error),
+                              errorWidget: (context, url, error) =>
+                                  const Icon(Icons.error),
                             )
                           : const Icon(Icons.book),
                       title: Text(manga?['title'] ?? 'Unknown'),
@@ -596,17 +634,19 @@ class _AdminAnalyticsScreenState extends ConsumerState<AdminAnalyticsScreen>
                 color: AppTheme.textSecondary,
               ),
               const SizedBox(height: 16),
-              Text(
+              const Text(
                 'Failed to load popular content',
                 style: TextStyle(color: AppTheme.textSecondary),
               ),
               const SizedBox(height: 8),
               ElevatedButton(
                 onPressed: () {
-                  ref.invalidate(adminPopularContentProvider({
-                    'timeframe': _popularContentTimeframe,
-                    'limit': '10',
-                  }));
+                  ref.invalidate(
+                    adminPopularContentProvider({
+                      'timeframe': _popularContentTimeframe,
+                      'limit': '10',
+                    }),
+                  );
                 },
                 child: const Text('Retry'),
               ),
@@ -618,7 +658,9 @@ class _AdminAnalyticsScreenState extends ConsumerState<AdminAnalyticsScreen>
   }
 
   Widget _buildUserRetentionTab() {
-    final retentionAsync = ref.watch(adminUserRetentionProvider(_retentionPeriod));
+    final retentionAsync = ref.watch(
+      adminUserRetentionProvider(_retentionPeriod),
+    );
 
     return RefreshIndicator(
       onRefresh: () async {
@@ -627,7 +669,7 @@ class _AdminAnalyticsScreenState extends ConsumerState<AdminAnalyticsScreen>
       child: retentionAsync.when(
         data: (data) {
           if (data.isEmpty) {
-            return EmptyState(
+            return const EmptyState(
               title: 'No Retention Data',
               message: 'User retention data will appear here',
               icon: Icons.timeline,
@@ -648,9 +690,18 @@ class _AdminAnalyticsScreenState extends ConsumerState<AdminAnalyticsScreen>
                     DropdownButton<String>(
                       value: _retentionPeriod,
                       items: const [
-                        DropdownMenuItem(value: '7d', child: Text('Last 7 Days')),
-                        DropdownMenuItem(value: '30d', child: Text('Last 30 Days')),
-                        DropdownMenuItem(value: '90d', child: Text('Last 90 Days')),
+                        DropdownMenuItem(
+                          value: '7d',
+                          child: Text('Last 7 Days'),
+                        ),
+                        DropdownMenuItem(
+                          value: '30d',
+                          child: Text('Last 30 Days'),
+                        ),
+                        DropdownMenuItem(
+                          value: '90d',
+                          child: Text('Last 90 Days'),
+                        ),
                       ],
                       onChanged: (value) {
                         if (value != null) {
@@ -725,10 +776,7 @@ class _AdminAnalyticsScreenState extends ConsumerState<AdminAnalyticsScreen>
                             ),
                           ),
                           const SizedBox(height: 16),
-                          SizedBox(
-                            height: 200,
-                            child: _buildDauLineChart(dau),
-                          ),
+                          SizedBox(height: 200, child: _buildDauLineChart(dau)),
                         ],
                       ),
                     ),
@@ -738,7 +786,7 @@ class _AdminAnalyticsScreenState extends ConsumerState<AdminAnalyticsScreen>
           );
         },
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stack) => EmptyState(
+        error: (error, stack) => const EmptyState(
           title: 'Error',
           message: 'Failed to load user retention',
           icon: Icons.error_outline,
@@ -757,7 +805,7 @@ class _AdminAnalyticsScreenState extends ConsumerState<AdminAnalyticsScreen>
       child: revenueAsync.when(
         data: (data) {
           if (data.isEmpty) {
-            return EmptyState(
+            return const EmptyState(
               title: 'No Revenue Data',
               message: 'Revenue data will appear here',
               icon: Icons.attach_money,
@@ -765,9 +813,11 @@ class _AdminAnalyticsScreenState extends ConsumerState<AdminAnalyticsScreen>
           }
 
           final adRevenue = data['adRevenue'] as Map<String, dynamic>? ?? {};
-          final premiumRevenue = data['premiumRevenue'] as Map<String, dynamic>? ?? {};
+          final premiumRevenue =
+              data['premiumRevenue'] as Map<String, dynamic>? ?? {};
           final dailyRevenue = data['dailyRevenue'] as List<dynamic>? ?? [];
-          final topRevenueManga = data['topRevenueManga'] as List<dynamic>? ?? [];
+          final topRevenueManga =
+              data['topRevenueManga'] as List<dynamic>? ?? [];
 
           return SingleChildScrollView(
             padding: const EdgeInsets.all(16),
@@ -781,9 +831,18 @@ class _AdminAnalyticsScreenState extends ConsumerState<AdminAnalyticsScreen>
                     DropdownButton<String>(
                       value: _revenueTimeframe,
                       items: const [
-                        DropdownMenuItem(value: '7d', child: Text('Last 7 Days')),
-                        DropdownMenuItem(value: '30d', child: Text('Last 30 Days')),
-                        DropdownMenuItem(value: '90d', child: Text('Last 90 Days')),
+                        DropdownMenuItem(
+                          value: '7d',
+                          child: Text('Last 7 Days'),
+                        ),
+                        DropdownMenuItem(
+                          value: '30d',
+                          child: Text('Last 30 Days'),
+                        ),
+                        DropdownMenuItem(
+                          value: '90d',
+                          child: Text('Last 90 Days'),
+                        ),
                       ],
                       onChanged: (value) {
                         if (value != null) {
@@ -806,7 +865,10 @@ class _AdminAnalyticsScreenState extends ConsumerState<AdminAnalyticsScreen>
                       children: [
                         const Text(
                           'Total Revenue',
-                          style: TextStyle(fontSize: 14, color: AppTheme.textSecondary),
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: AppTheme.textSecondary,
+                          ),
                         ),
                         const SizedBox(height: 8),
                         Text(
@@ -832,16 +894,22 @@ class _AdminAnalyticsScreenState extends ConsumerState<AdminAnalyticsScreen>
                       children: [
                         const Text(
                           'Ad Revenue',
-                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         const SizedBox(height: 8),
                         Text(
                           '\$${adRevenue['total'] ?? '0.00'}',
-                          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                          style: const TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         Text(
                           '${adRevenue['unlocks'] ?? 0} ad unlocks',
-                          style: TextStyle(color: AppTheme.textSecondary),
+                          style: const TextStyle(color: AppTheme.textSecondary),
                         ),
                       ],
                     ),
@@ -858,16 +926,22 @@ class _AdminAnalyticsScreenState extends ConsumerState<AdminAnalyticsScreen>
                       children: [
                         const Text(
                           'Premium Revenue',
-                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         const SizedBox(height: 8),
                         Text(
                           '\$${premiumRevenue['total'] ?? '0.00'}',
-                          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                          style: const TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         Text(
                           '${premiumRevenue['subscribers'] ?? 0} subscribers',
-                          style: TextStyle(color: AppTheme.textSecondary),
+                          style: const TextStyle(color: AppTheme.textSecondary),
                         ),
                       ],
                     ),
@@ -921,9 +995,12 @@ class _AdminAnalyticsScreenState extends ConsumerState<AdminAnalyticsScreen>
                               placeholder: (context, url) => const SizedBox(
                                 width: 50,
                                 height: 70,
-                                child: Center(child: CircularProgressIndicator()),
+                                child: Center(
+                                  child: CircularProgressIndicator(),
+                                ),
                               ),
-                              errorWidget: (context, url, error) => const Icon(Icons.error),
+                              errorWidget: (context, url, error) =>
+                                  const Icon(Icons.error),
                             )
                           : const Icon(Icons.book),
                       title: Text(manga?['title'] ?? 'Unknown'),
@@ -943,7 +1020,7 @@ class _AdminAnalyticsScreenState extends ConsumerState<AdminAnalyticsScreen>
           );
         },
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stack) => EmptyState(
+        error: (error, stack) => const EmptyState(
           title: 'Error',
           message: 'Failed to load revenue analytics',
           icon: Icons.error_outline,
@@ -953,17 +1030,21 @@ class _AdminAnalyticsScreenState extends ConsumerState<AdminAnalyticsScreen>
   }
 
   Widget _buildContentPerformanceTab() {
-    final performanceAsync = ref.watch(adminContentPerformanceProvider({
-      'timeframe': _contentPerformanceTimeframe,
-      'limit': '20',
-    }));
+    final performanceAsync = ref.watch(
+      adminContentPerformanceProvider({
+        'timeframe': _contentPerformanceTimeframe,
+        'limit': '20',
+      }),
+    );
 
     return RefreshIndicator(
       onRefresh: () async {
-        ref.invalidate(adminContentPerformanceProvider({
-          'timeframe': _contentPerformanceTimeframe,
-          'limit': '20',
-        }));
+        ref.invalidate(
+          adminContentPerformanceProvider({
+            'timeframe': _contentPerformanceTimeframe,
+            'limit': '20',
+          }),
+        );
       },
       child: performanceAsync.when(
         data: (data) {
@@ -979,17 +1060,19 @@ class _AdminAnalyticsScreenState extends ConsumerState<AdminAnalyticsScreen>
                     color: AppTheme.textSecondary,
                   ),
                   const SizedBox(height: 16),
-                  Text(
+                  const Text(
                     'Failed to load content performance',
                     style: TextStyle(color: AppTheme.textSecondary),
                   ),
                   const SizedBox(height: 8),
                   ElevatedButton(
                     onPressed: () {
-                      ref.invalidate(adminContentPerformanceProvider({
-                        'timeframe': _contentPerformanceTimeframe,
-                        'limit': '20',
-                      }));
+                      ref.invalidate(
+                        adminContentPerformanceProvider({
+                          'timeframe': _contentPerformanceTimeframe,
+                          'limit': '20',
+                        }),
+                      );
                     },
                     child: const Text('Retry'),
                   ),
@@ -998,11 +1081,14 @@ class _AdminAnalyticsScreenState extends ConsumerState<AdminAnalyticsScreen>
             );
           }
 
-          final contentPerformance = data['contentPerformance'] as List<dynamic>? ?? [];
-          final avgMetrics = data['averageMetrics'] as Map<String, dynamic>? ?? {};
+          final contentPerformance =
+              data['contentPerformance'] as List<dynamic>? ?? [];
+          final avgMetrics =
+              data['averageMetrics'] as Map<String, dynamic>? ?? {};
 
-          if (contentPerformance.isEmpty && (avgMetrics.isEmpty || avgMetrics['totalReads'] == 0)) {
-            return EmptyState(
+          if (contentPerformance.isEmpty &&
+              (avgMetrics.isEmpty || avgMetrics['totalReads'] == 0)) {
+            return const EmptyState(
               title: 'No Performance Data',
               message: 'Content performance data will appear here',
               icon: Icons.analytics,
@@ -1021,17 +1107,28 @@ class _AdminAnalyticsScreenState extends ConsumerState<AdminAnalyticsScreen>
                     DropdownButton<String>(
                       value: _contentPerformanceTimeframe,
                       items: const [
-                        DropdownMenuItem(value: '7d', child: Text('Last 7 Days')),
-                        DropdownMenuItem(value: '30d', child: Text('Last 30 Days')),
-                        DropdownMenuItem(value: '90d', child: Text('Last 90 Days')),
+                        DropdownMenuItem(
+                          value: '7d',
+                          child: Text('Last 7 Days'),
+                        ),
+                        DropdownMenuItem(
+                          value: '30d',
+                          child: Text('Last 30 Days'),
+                        ),
+                        DropdownMenuItem(
+                          value: '90d',
+                          child: Text('Last 90 Days'),
+                        ),
                       ],
                       onChanged: (value) {
                         if (value != null) {
                           setState(() => _contentPerformanceTimeframe = value);
-                          ref.invalidate(adminContentPerformanceProvider({
-                            'timeframe': value,
-                            'limit': '20',
-                          }));
+                          ref.invalidate(
+                            adminContentPerformanceProvider({
+                              'timeframe': value,
+                              'limit': '20',
+                            }),
+                          );
                         }
                       },
                     ),
@@ -1048,7 +1145,10 @@ class _AdminAnalyticsScreenState extends ConsumerState<AdminAnalyticsScreen>
                       children: [
                         const Text(
                           'Average Metrics',
-                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         const SizedBox(height: 12),
                         Row(
@@ -1056,7 +1156,9 @@ class _AdminAnalyticsScreenState extends ConsumerState<AdminAnalyticsScreen>
                             Expanded(
                               child: _StatCard(
                                 title: 'Avg Chapters Read',
-                                value: avgMetrics['avgChaptersRead']?.toString() ?? '0',
+                                value:
+                                    avgMetrics['avgChaptersRead']?.toString() ??
+                                    '0',
                                 icon: Icons.book,
                                 color: Colors.blue,
                               ),
@@ -1065,7 +1167,8 @@ class _AdminAnalyticsScreenState extends ConsumerState<AdminAnalyticsScreen>
                             Expanded(
                               child: _StatCard(
                                 title: 'Total Reads',
-                                value: avgMetrics['totalReads']?.toString() ?? '0',
+                                value:
+                                    avgMetrics['totalReads']?.toString() ?? '0',
                                 icon: Icons.visibility,
                                 color: AppTheme.primaryRed,
                               ),
@@ -1098,20 +1201,25 @@ class _AdminAnalyticsScreenState extends ConsumerState<AdminAnalyticsScreen>
                               placeholder: (context, url) => const SizedBox(
                                 width: 50,
                                 height: 70,
-                                child: Center(child: CircularProgressIndicator()),
+                                child: Center(
+                                  child: CircularProgressIndicator(),
+                                ),
                               ),
-                              errorWidget: (context, url, error) => const Icon(Icons.error),
+                              errorWidget: (context, url, error) =>
+                                  const Icon(Icons.error),
                             )
                           : const Icon(Icons.book),
                       title: Text(manga?['title'] ?? 'Unknown'),
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('${item['uniqueReaders']} readers • ${item['totalReads']} reads'),
+                          Text(
+                            '${item['uniqueReaders']} readers • ${item['totalReads']} reads',
+                          ),
                           if (item['completionRate'] != null)
                             Text(
                               'Completion: ${item['completionRate']?.toStringAsFixed(1) ?? 0}%',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: AppTheme.textSecondary,
                                 fontSize: 12,
                               ),
@@ -1129,7 +1237,7 @@ class _AdminAnalyticsScreenState extends ConsumerState<AdminAnalyticsScreen>
                           if (item['avgTimeSpent'] != null)
                             Text(
                               '${(item['avgTimeSpent'] / 60).toStringAsFixed(0)} min',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: AppTheme.textSecondary,
                                 fontSize: 12,
                               ),
@@ -1154,17 +1262,19 @@ class _AdminAnalyticsScreenState extends ConsumerState<AdminAnalyticsScreen>
                 color: AppTheme.textSecondary,
               ),
               const SizedBox(height: 16),
-              Text(
+              const Text(
                 'Failed to load content performance',
                 style: TextStyle(color: AppTheme.textSecondary),
               ),
               const SizedBox(height: 8),
               ElevatedButton(
                 onPressed: () {
-                  ref.invalidate(adminContentPerformanceProvider({
-                    'timeframe': _contentPerformanceTimeframe,
-                    'limit': '20',
-                  }));
+                  ref.invalidate(
+                    adminContentPerformanceProvider({
+                      'timeframe': _contentPerformanceTimeframe,
+                      'limit': '20',
+                    }),
+                  );
                 },
                 child: const Text('Retry'),
               ),
@@ -1182,8 +1292,8 @@ class _AdminAnalyticsScreenState extends ConsumerState<AdminAnalyticsScreen>
 
     return LineChart(
       LineChartData(
-        gridData: FlGridData(show: false),
-        titlesData: FlTitlesData(show: false),
+        gridData: const FlGridData(show: false),
+        titlesData: const FlTitlesData(show: false),
         borderData: FlBorderData(show: false),
         lineBarsData: [
           LineChartBarData(
@@ -1195,7 +1305,7 @@ class _AdminAnalyticsScreenState extends ConsumerState<AdminAnalyticsScreen>
             isCurved: true,
             color: AppTheme.primaryRed,
             barWidth: 3,
-            dotData: FlDotData(show: false),
+            dotData: const FlDotData(show: false),
             belowBarData: BarAreaData(
               show: true,
               color: AppTheme.primaryRed.withOpacity(0.1),
@@ -1246,8 +1356,8 @@ class _AdminAnalyticsScreenState extends ConsumerState<AdminAnalyticsScreen>
 
     return BarChart(
       BarChartData(
-        gridData: FlGridData(show: false),
-        titlesData: FlTitlesData(show: false),
+        gridData: const FlGridData(show: false),
+        titlesData: const FlTitlesData(show: false),
         borderData: FlBorderData(show: false),
         barGroups: List.generate(
           data.length,
@@ -1273,9 +1383,11 @@ class _AdminAnalyticsScreenState extends ConsumerState<AdminAnalyticsScreen>
 
     return BarChart(
       BarChartData(
-        gridData: FlGridData(show: false),
+        gridData: const FlGridData(show: false),
         titlesData: FlTitlesData(
-          leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+          leftTitles: const AxisTitles(
+            sideTitles: SideTitles(showTitles: false),
+          ),
           bottomTitles: AxisTitles(
             sideTitles: SideTitles(
               showTitles: true,
@@ -1313,8 +1425,8 @@ class _AdminAnalyticsScreenState extends ConsumerState<AdminAnalyticsScreen>
 
     return LineChart(
       LineChartData(
-        gridData: FlGridData(show: false),
-        titlesData: FlTitlesData(show: false),
+        gridData: const FlGridData(show: false),
+        titlesData: const FlTitlesData(show: false),
         borderData: FlBorderData(show: false),
         lineBarsData: [
           LineChartBarData(
@@ -1328,7 +1440,7 @@ class _AdminAnalyticsScreenState extends ConsumerState<AdminAnalyticsScreen>
             isCurved: true,
             color: Colors.green,
             barWidth: 3,
-            dotData: FlDotData(show: false),
+            dotData: const FlDotData(show: false),
             belowBarData: BarAreaData(
               show: true,
               color: Colors.green.withOpacity(0.1),
@@ -1346,8 +1458,8 @@ class _AdminAnalyticsScreenState extends ConsumerState<AdminAnalyticsScreen>
 
     return LineChart(
       LineChartData(
-        gridData: FlGridData(show: false),
-        titlesData: FlTitlesData(show: false),
+        gridData: const FlGridData(show: false),
+        titlesData: const FlTitlesData(show: false),
         borderData: FlBorderData(show: false),
         lineBarsData: [
           LineChartBarData(
@@ -1361,7 +1473,7 @@ class _AdminAnalyticsScreenState extends ConsumerState<AdminAnalyticsScreen>
             isCurved: true,
             color: Colors.green,
             barWidth: 3,
-            dotData: FlDotData(show: false),
+            dotData: const FlDotData(show: false),
             belowBarData: BarAreaData(
               show: true,
               color: Colors.green.withOpacity(0.1),

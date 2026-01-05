@@ -166,7 +166,7 @@ class ReadingHistoryScreen extends ConsumerWidget {
                               const SizedBox(height: 4),
                               Row(
                                 children: [
-                                  Icon(
+                                  const Icon(
                                     Icons.access_time,
                                     size: 14,
                                     color: AppTheme.textSecondary,
@@ -181,7 +181,7 @@ class ReadingHistoryScreen extends ConsumerWidget {
                                   ),
                                   if (item['chaptersRead'] != null) ...[
                                     const SizedBox(width: 12),
-                                    Icon(
+                                    const Icon(
                                       Icons.menu_book,
                                       size: 14,
                                       color: AppTheme.textSecondary,

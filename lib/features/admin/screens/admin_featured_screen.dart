@@ -165,15 +165,15 @@ class _AdminFeaturedScreenState extends ConsumerState<AdminFeaturedScreen> {
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(color: AppTheme.primaryRed.withOpacity(0.3)),
               ),
-              child: Row(
+              child: const Row(
                 children: [
                   Icon(
                     Icons.info_outline,
                     color: AppTheme.primaryRed,
                     size: 20,
                   ),
-                  const SizedBox(width: 12),
-                  const Expanded(
+                  SizedBox(width: 12),
+                  Expanded(
                     child: Text(
                       'Featured manga appears in the home carousel. Auto-added manga expires after 1 week.',
                       style: TextStyle(fontSize: 13),

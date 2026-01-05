@@ -177,7 +177,7 @@ class _ReaderScreenState extends ConsumerState<ReaderScreen> {
   @override
   void dispose() {
     _flutterTts?.stop();
-    
+
     // End analytics tracking when reader closes
     if (_sessionStart != null) {
       // Try to get chapter data and track
@@ -188,7 +188,7 @@ class _ReaderScreenState extends ConsumerState<ReaderScreen> {
         }
       });
     }
-    
+
     _scrollController.dispose();
     super.dispose();
   }
@@ -290,12 +290,15 @@ class _ReaderScreenState extends ConsumerState<ReaderScreen> {
     StorageService.saveSetting(_imageScaleKey, _imageScale);
   }
 
-  Future<void> _unlockChapter(BuildContext context, ChapterModel chapter) async {
+  Future<void> _unlockChapter(
+    BuildContext context,
+    ChapterModel chapter,
+  ) async {
     try {
       // Show rewarded ad
       final adService = AdService.instance;
       bool adWatched = false;
-      
+
       final adShown = await adService.showRewardedAd(
         onRewarded: (reward) {
           adWatched = true;
@@ -314,11 +317,17 @@ class _ReaderScreenState extends ConsumerState<ReaderScreen> {
         // Refresh chapter data
         ref.invalidate(chapterProvider(widget.chapterId));
       } else if (mounted && !adWatched) {
-        CustomSnackbar.error(context, 'Please watch the ad to unlock the chapter.');
+        CustomSnackbar.error(
+          context,
+          'Please watch the ad to unlock the chapter.',
+        );
       }
     } catch (e) {
       if (mounted) {
-        CustomSnackbar.error(context, 'Failed to unlock chapter: ${e.toString()}');
+        CustomSnackbar.error(
+          context,
+          'Failed to unlock chapter: ${e.toString()}',
+        );
       }
     }
   }
@@ -358,7 +367,7 @@ class _ReaderScreenState extends ConsumerState<ReaderScreen> {
     if (_sessionStart != null) return; // Already tracking
 
     _sessionStart = DateTime.now();
-    
+
     // Get manga details for analytics
     try {
       final manga = await ref.read(mangaDetailProvider(chapter.mangaId).future);
@@ -378,7 +387,7 @@ class _ReaderScreenState extends ConsumerState<ReaderScreen> {
 
     final sessionEnd = DateTime.now();
     final timeSpent = sessionEnd.difference(_sessionStart!).inSeconds;
-    
+
     // Calculate completion percentage based on scroll progress
     final completionPercentage = _scrollProgress * 100;
     final isCompleted = _scrollProgress >= 0.95; // Consider 95%+ as completed
@@ -417,7 +426,7 @@ class _ReaderScreenState extends ConsumerState<ReaderScreen> {
       body: chapterAsync.when(
         data: (chapter) {
           if (chapter == null) {
-            return Center(
+            return const Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -426,7 +435,7 @@ class _ReaderScreenState extends ConsumerState<ReaderScreen> {
                     size: 64,
                     color: AppTheme.textSecondary,
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16),
                   Text(
                     'Chapter not found',
                     style: TextStyle(color: AppTheme.textSecondary),
@@ -444,7 +453,7 @@ class _ReaderScreenState extends ConsumerState<ReaderScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.lock,
                       size: 64,
                       color: AppTheme.primaryRed,
@@ -461,13 +470,13 @@ class _ReaderScreenState extends ConsumerState<ReaderScreen> {
                     const SizedBox(height: 12),
                     Text(
                       'Chapter ${chapter.chapterNumber} is locked',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16,
                         color: AppTheme.textSecondary,
                       ),
                     ),
                     const SizedBox(height: 8),
-                    Text(
+                    const Text(
                       'Watch an ad to unlock this chapter',
                       style: TextStyle(
                         fontSize: 14,
@@ -492,7 +501,7 @@ class _ReaderScreenState extends ConsumerState<ReaderScreen> {
                     const SizedBox(height: 16),
                     TextButton(
                       onPressed: () => context.pop(),
-                      child: Text(
+                      child: const Text(
                         'Go Back',
                         style: TextStyle(color: AppTheme.textSecondary),
                       ),
@@ -926,26 +935,27 @@ class _ReaderScreenState extends ConsumerState<ReaderScreen> {
     }
 
     final nextChapter = chapters[currentIndex + 1];
-    
+
     // Get manga details to check if it's adult and has freeChapters
     final manga = await ref.read(mangaDetailProvider(chapter.mangaId).future);
-    
+
     // Check if next chapter should be locked (for adult manga after free chapters)
     final freeChapters = manga?.freeChapters ?? 3;
-    final shouldBeLocked = manga?.isAdult == true && nextChapter.chapterNumber > freeChapters;
+    final shouldBeLocked =
+        manga?.isAdult == true && nextChapter.chapterNumber > freeChapters;
     final isNextChapterLocked = nextChapter.isLocked == true || shouldBeLocked;
-    
+
     // If next chapter is locked, show rewarded ad to unlock
     if (isNextChapterLocked) {
       final adService = AdService.instance;
       bool adWatched = false;
-      
+
       final adShown = await adService.showRewardedAd(
         onRewarded: (reward) {
           adWatched = true;
         },
       );
-      
+
       if (adShown && adWatched && mounted) {
         // Unlock chapter via API
         final apiService = ref.read(apiServiceProvider);
@@ -953,24 +963,24 @@ class _ReaderScreenState extends ConsumerState<ReaderScreen> {
           await apiService.post(
             '${ApiConstants.chapterUnlock}/${nextChapter.id}/unlock',
           );
-          
+
           CustomSnackbar.success(context, 'Chapter unlocked!');
-          
+
           // Refresh chapter data
           ref.invalidate(chapterProvider(nextChapter.id));
-          
+
           // Wait a moment for the provider to refresh
           await Future.delayed(const Duration(milliseconds: 300));
-          
-    // End current session tracking before navigating
-    if (_sessionStart != null) {
-      await _endAnalyticsTracking(chapter);
-    }
-    
-    // Navigate to next chapter
-    if (mounted) {
-      context.pushReplacement('/reader/${nextChapter.id}');
-    }
+
+          // End current session tracking before navigating
+          if (_sessionStart != null) {
+            await _endAnalyticsTracking(chapter);
+          }
+
+          // Navigate to next chapter
+          if (mounted) {
+            context.pushReplacement('/reader/${nextChapter.id}');
+          }
         } catch (e) {
           if (mounted) {
             CustomSnackbar.error(
@@ -1179,15 +1189,15 @@ class _ReaderSettingsSheetState extends State<_ReaderSettingsSheet> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
+                        const Row(
                           children: [
                             Icon(
                               Icons.workspace_premium,
                               color: AppTheme.primaryRed,
                               size: 18,
                             ),
-                            const SizedBox(width: 8),
-                            const Text(
+                            SizedBox(width: 8),
+                            Text(
                               'Unlock Premium Reader',
                               style: TextStyle(
                                 fontSize: 13,
@@ -1199,7 +1209,7 @@ class _ReaderSettingsSheetState extends State<_ReaderSettingsSheet> {
                         ),
                         const SizedBox(height: 8),
                         if (isPremiumActive)
-                          Text(
+                          const Text(
                             'Premium Reader is active!',
                             style: TextStyle(
                               fontSize: 11,
@@ -1210,7 +1220,7 @@ class _ReaderSettingsSheetState extends State<_ReaderSettingsSheet> {
                         else ...[
                           Text(
                             'Watch 6 ads to unlock premium features ($adsWatched/6)',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 11,
                               color: Colors.white70,
                             ),
@@ -1222,7 +1232,7 @@ class _ReaderSettingsSheetState extends State<_ReaderSettingsSheet> {
                               value: adsWatched / 6,
                               minHeight: 4,
                               backgroundColor: Colors.white.withOpacity(0.2),
-                              valueColor: AlwaysStoppedAnimation<Color>(
+                              valueColor: const AlwaysStoppedAnimation<Color>(
                                 AppTheme.primaryRed,
                               ),
                             ),
@@ -1293,11 +1303,11 @@ class _ReaderSettingsSheetState extends State<_ReaderSettingsSheet> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
+                    const Row(
                       children: [
                         Icon(Icons.stars, color: Colors.amber, size: 18),
-                        const SizedBox(width: 8),
-                        const Text(
+                        SizedBox(width: 8),
+                        Text(
                           'Skip Ads',
                           style: TextStyle(
                             fontSize: 13,

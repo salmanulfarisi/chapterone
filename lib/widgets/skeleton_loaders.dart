@@ -19,7 +19,8 @@ class BaseShimmer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
       baseColor: baseColor ?? AppTheme.cardBackground,
-      highlightColor: highlightColor ?? AppTheme.cardBackground.withOpacity(0.5),
+      highlightColor:
+          highlightColor ?? AppTheme.cardBackground.withOpacity(0.5),
       period: const Duration(milliseconds: 1500),
       child: child,
     );
@@ -31,11 +32,7 @@ class SkeletonMangaCard extends StatelessWidget {
   final double? width;
   final double? height;
 
-  const SkeletonMangaCard({
-    super.key,
-    this.width,
-    this.height,
-  });
+  const SkeletonMangaCard({super.key, this.width, this.height});
 
   @override
   Widget build(BuildContext context) {
@@ -73,8 +70,8 @@ class SkeletonMangaList extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           itemCount: itemCount,
           itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.only(right: 12.0),
+            return const Padding(
+              padding: EdgeInsets.only(right: 12.0),
               child: SkeletonMangaCard(),
             );
           },
@@ -85,8 +82,8 @@ class SkeletonMangaList extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         itemCount: itemCount,
         itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.only(bottom: 16.0),
+          return const Padding(
+            padding: EdgeInsets.only(bottom: 16.0),
             child: SkeletonMangaListItem(),
           );
         },
@@ -113,9 +110,9 @@ class SkeletonMangaListItem extends StatelessWidget {
             Container(
               width: 80,
               height: 120,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: AppTheme.cardBackground,
-                borderRadius: const BorderRadius.only(
+                borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(12),
                   bottomLeft: Radius.circular(12),
                 ),
@@ -212,9 +209,7 @@ class SkeletonTextLines extends StatelessWidget {
       children: List.generate(
         lineCount,
         (index) => Padding(
-          padding: EdgeInsets.only(
-            bottom: index < lineCount - 1 ? spacing : 0,
-          ),
+          padding: EdgeInsets.only(bottom: index < lineCount - 1 ? spacing : 0),
           child: SkeletonText(
             width: index == lineCount - 1 ? 200 : double.infinity,
             height: lineHeight,
@@ -229,10 +224,7 @@ class SkeletonTextLines extends StatelessWidget {
 class SkeletonBanner extends StatelessWidget {
   final double height;
 
-  const SkeletonBanner({
-    super.key,
-    this.height = 400,
-  });
+  const SkeletonBanner({super.key, this.height = 400});
 
   @override
   Widget build(BuildContext context) {
@@ -240,9 +232,7 @@ class SkeletonBanner extends StatelessWidget {
       child: Container(
         height: height,
         width: double.infinity,
-        decoration: BoxDecoration(
-          color: AppTheme.cardBackground,
-        ),
+        decoration: const BoxDecoration(color: AppTheme.cardBackground),
       ),
     );
   }
@@ -312,10 +302,7 @@ class SkeletonChapterItem extends StatelessWidget {
 class SkeletonChapterList extends StatelessWidget {
   final int itemCount;
 
-  const SkeletonChapterList({
-    super.key,
-    this.itemCount = 10,
-  });
+  const SkeletonChapterList({super.key, this.itemCount = 10});
 
   @override
   Widget build(BuildContext context) {
@@ -349,7 +336,7 @@ class SkeletonProfileStats extends StatelessWidget {
                 Container(
                   width: 40,
                   height: 40,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: AppTheme.cardBackground,
                     shape: BoxShape.circle,
                   ),
@@ -463,10 +450,7 @@ class SkeletonSearchResult extends StatelessWidget {
 class SkeletonChart extends StatelessWidget {
   final double height;
 
-  const SkeletonChart({
-    super.key,
-    this.height = 200,
-  });
+  const SkeletonChart({super.key, this.height = 200});
 
   @override
   Widget build(BuildContext context) {
@@ -512,4 +496,3 @@ class SkeletonChart extends StatelessWidget {
     );
   }
 }
-

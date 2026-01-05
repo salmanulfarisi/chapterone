@@ -19,19 +19,19 @@ class _NoInternetScreenState extends ConsumerState<NoInternetScreen>
   late Animation<double> _bounceAnimation;
 
   final List<String> _funnyMessages = [
-    "Oops! The internet went on a coffee break ☕",
-    "Your WiFi is taking a nap 😴",
-    "The internet is playing hide and seek 🫥",
-    "Connection lost! Even the best need a break 🏖️",
-    "No signal? Time to touch some grass 🌱",
-    "The internet is having an existential crisis 🤔",
-    "404: Internet not found 🚫",
-    "Your connection is more lost than my keys 🔑",
-    "The WiFi fairy is on strike ✨",
-    "Internet.exe has stopped working 💻",
+    'Oops! The internet went on a coffee break ☕',
+    'Your WiFi is taking a nap 😴',
+    'The internet is playing hide and seek 🫥',
+    'Connection lost! Even the best need a break 🏖️',
+    'No signal? Time to touch some grass 🌱',
+    'The internet is having an existential crisis 🤔',
+    '404: Internet not found 🚫',
+    'Your connection is more lost than my keys 🔑',
+    'The WiFi fairy is on strike ✨',
+    'Internet.exe has stopped working 💻',
   ];
 
-  String _currentMessage = "";
+  String _currentMessage = '';
 
   @override
   void initState() {
@@ -125,7 +125,7 @@ class _NoInternetScreenState extends ConsumerState<NoInternetScreen>
                         child: Container(
                           width: 120,
                           height: 120,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             color: AppTheme.cardBackground,
                             shape: BoxShape.circle,
                           ),
@@ -159,7 +159,7 @@ class _NoInternetScreenState extends ConsumerState<NoInternetScreen>
                   const SizedBox(height: 16),
 
                   // Subtitle
-                  Text(
+                  const Text(
                     'Check your internet connection and try again',
                     style: TextStyle(
                       fontSize: 16,
@@ -236,14 +236,14 @@ class _NoInternetScreenState extends ConsumerState<NoInternetScreen>
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
+                        const Row(
                           children: [
                             Icon(
                               Icons.lightbulb_outline,
                               color: AppTheme.primaryRed,
                             ),
-                            const SizedBox(width: 8),
-                            const Text(
+                            SizedBox(width: 8),
+                            Text(
                               'Quick Tips',
                               style: TextStyle(
                                 fontSize: 18,
@@ -265,7 +265,9 @@ class _NoInternetScreenState extends ConsumerState<NoInternetScreen>
 
                   // Offline Mode Button
                   FutureBuilder<List<String>>(
-                    future: Future.value(OfflineService.instance.getCachedChapters()),
+                    future: Future.value(
+                      OfflineService.instance.getCachedChapters(),
+                    ),
                     builder: (context, snapshot) {
                       final cachedCount = snapshot.data?.length ?? 0;
                       if (cachedCount == 0) {

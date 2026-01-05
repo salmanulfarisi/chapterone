@@ -277,7 +277,10 @@ class _ScraperSearchTabState extends ConsumerState<_ScraperSearchTab> {
     // Validate URL format
     final uri = Uri.tryParse(url);
     if (uri == null || !uri.hasScheme || !uri.hasAuthority) {
-      CustomSnackbar.error(context, 'Please enter a valid URL (e.g., https://example.com)');
+      CustomSnackbar.error(
+        context,
+        'Please enter a valid URL (e.g., https://example.com)',
+      );
       return;
     }
 
@@ -573,7 +576,8 @@ class _ScraperSearchTabState extends ConsumerState<_ScraperSearchTab> {
                                 // Show success with job details
                                 final jobId =
                                     response.data['_id']?.toString() ?? '';
-                                final jobIdDisplay = jobId.isNotEmpty && jobId.length > 8
+                                final jobIdDisplay =
+                                    jobId.isNotEmpty && jobId.length > 8
                                     ? jobId.substring(0, 8)
                                     : jobId;
                                 final mangaTitle =
@@ -971,7 +975,8 @@ class _ScraperUpdatesTabState extends ConsumerState<_ScraperUpdatesTab> {
           if (updateData is Map && updateData['hasUpdates'] != null) {
             final hasUpdates = updateData['hasUpdates'] == true;
             // Try to get newChaptersCount, fallback to counting newChapters array
-            final newChaptersCount = updateData['newChaptersCount'] ??
+            final newChaptersCount =
+                updateData['newChaptersCount'] ??
                 (updateData['newChapters'] as List?)?.length ??
                 0;
 
@@ -1062,11 +1067,11 @@ class _ScraperUpdatesTabState extends ConsumerState<_ScraperUpdatesTab> {
                 ? mangaResponse.data
                 : <String, dynamic>{};
             final sourceUrl = mangaData['sourceUrl']?.toString() ?? '';
-            
+
             if (sourceUrl.isEmpty) {
               throw Exception('Manga source URL not found');
             }
-            
+
             // Create an update job with the URL
             await apiService.post(
               '${ApiConstants.adminScraper}/jobs',
@@ -1240,7 +1245,7 @@ class _ScraperUpdatesTabState extends ConsumerState<_ScraperUpdatesTab> {
                           const SizedBox(height: 4),
                           Text(
                             '$totalManga total imported • $totalNewChapters new chapters available',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 12,
                               color: AppTheme.textSecondary,
                             ),
@@ -1356,7 +1361,7 @@ class _ScraperUpdatesTabState extends ConsumerState<_ScraperUpdatesTab> {
                         padding: const EdgeInsets.all(16),
                         child: Text(
                           'Total imported: ${allManga.length} manga',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 12,
                             color: AppTheme.textSecondary,
                           ),
@@ -1410,7 +1415,7 @@ class _ScraperUpdatesTabState extends ConsumerState<_ScraperUpdatesTab> {
               const SizedBox(height: 16),
               Text(
                 'Checking ${_getScraperName(widget.scraperType)} manga for updates...',
-                style: TextStyle(color: AppTheme.textSecondary),
+                style: const TextStyle(color: AppTheme.textSecondary),
               ),
               const SizedBox(height: 8),
               ElevatedButton.icon(
@@ -1483,7 +1488,7 @@ class _ScraperUpdatesTabState extends ConsumerState<_ScraperUpdatesTab> {
                         const SizedBox(height: 4),
                         Text(
                           _progressStatus['_total'] ?? 'Initializing...',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 12,
                             color: AppTheme.textSecondary,
                           ),
@@ -1506,14 +1511,14 @@ class _ScraperUpdatesTabState extends ConsumerState<_ScraperUpdatesTab> {
                 children: [
                   Text(
                     'Progress: $checkedCount / $totalManga',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 12,
                       color: AppTheme.textSecondary,
                     ),
                   ),
                   Text(
                     '${(progress * 100).toStringAsFixed(1)}%',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
                       color: Colors.orange,
@@ -1755,11 +1760,11 @@ class _ScraperUpdatesTabState extends ConsumerState<_ScraperUpdatesTab> {
                       color: Colors.orange.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: Row(
+                    child: const Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Icon(Icons.update, size: 14, color: Colors.orange),
-                        const SizedBox(width: 4),
+                        SizedBox(width: 4),
                         Text(
                           'Updates Available',
                           style: TextStyle(
@@ -1798,7 +1803,7 @@ class _ScraperUpdatesTabState extends ConsumerState<_ScraperUpdatesTab> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+                          const Text(
                             'Current Chapters',
                             style: TextStyle(
                               fontSize: 11,
@@ -1821,7 +1826,7 @@ class _ScraperUpdatesTabState extends ConsumerState<_ScraperUpdatesTab> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Text(
+                          const Text(
                             'Available Chapters',
                             style: TextStyle(
                               fontSize: 11,
@@ -1963,7 +1968,7 @@ class _ChapterDetailsDialog extends StatelessWidget {
                         const SizedBox(height: 4),
                         Text(
                           '${newChapters.length} new chapters available',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 12,
                             color: AppTheme.textSecondary,
                           ),
@@ -2021,7 +2026,7 @@ class _ChapterDetailsDialog extends StatelessWidget {
                             subtitle: chapterDate != null
                                 ? Text(
                                     'Released: $chapterDate',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 11,
                                       color: AppTheme.textSecondary,
                                     ),
@@ -2119,7 +2124,11 @@ class _ScraperResultsTab extends ConsumerWidget {
     );
   }
 
-  Widget _buildJobCard(BuildContext context, WidgetRef ref, Map<String, dynamic> job) {
+  Widget _buildJobCard(
+    BuildContext context,
+    WidgetRef ref,
+    Map<String, dynamic> job,
+  ) {
     final status = job['status']?.toString() ?? 'unknown';
     final progress = job['progress'] as Map<String, dynamic>? ?? {};
     final percentage = (progress['percentage'] as num?)?.toDouble() ?? 0.0;
@@ -2164,7 +2173,10 @@ class _ScraperResultsTab extends ConsumerWidget {
             Row(
               children: [
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
                     color: statusColor.withOpacity(0.2),
                     borderRadius: BorderRadius.circular(12),
@@ -2182,7 +2194,7 @@ class _ScraperResultsTab extends ConsumerWidget {
                 if (job['updatedAt'] != null)
                   Text(
                     _getTimeAgo(DateTime.parse(job['updatedAt'])),
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 11,
                       color: AppTheme.textSecondary,
                     ),
@@ -2205,20 +2217,14 @@ class _ScraperResultsTab extends ConsumerWidget {
                 total > 0
                     ? '$current / $total (${((current / total) * 100).toStringAsFixed(1)}%)'
                     : '${percentage.toStringAsFixed(1)}%',
-                style: TextStyle(
-                  fontSize: 11,
-                  color: statusColor,
-                ),
+                style: TextStyle(fontSize: 11, color: statusColor),
               ),
             ],
             if (error != null) ...[
               const SizedBox(height: 8),
               Text(
                 error,
-                style: const TextStyle(
-                  color: Colors.red,
-                  fontSize: 11,
-                ),
+                style: const TextStyle(color: Colors.red, fontSize: 11),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),

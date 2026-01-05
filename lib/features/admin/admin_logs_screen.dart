@@ -216,50 +216,50 @@ class _AdminLogsScreenState extends ConsumerState<AdminLogsScreen> {
                       isDense: true,
                     ),
                     isExpanded: true,
-                    items: [
-                      const DropdownMenuItem(
+                    items: const [
+                      DropdownMenuItem(
                         value: null,
                         child: Text(
                           'All Actions',
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      const DropdownMenuItem(
+                      DropdownMenuItem(
                         value: 'manga_created',
                         child: Text(
                           'Manga Created',
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      const DropdownMenuItem(
+                      DropdownMenuItem(
                         value: 'manga_updated',
                         child: Text(
                           'Manga Updated',
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      const DropdownMenuItem(
+                      DropdownMenuItem(
                         value: 'manga_deleted',
                         child: Text(
                           'Manga Deleted',
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      const DropdownMenuItem(
+                      DropdownMenuItem(
                         value: 'chapter_added',
                         child: Text(
                           'Chapter Added',
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      const DropdownMenuItem(
+                      DropdownMenuItem(
                         value: 'scraper_job_completed',
                         child: Text(
                           'Job Completed',
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      const DropdownMenuItem(
+                      DropdownMenuItem(
                         value: 'system_error',
                         child: Text(
                           'System Error',
@@ -289,27 +289,27 @@ class _AdminLogsScreenState extends ConsumerState<AdminLogsScreen> {
                       isDense: true,
                     ),
                     isExpanded: true,
-                    items: [
-                      const DropdownMenuItem(
+                    items: const [
+                      DropdownMenuItem(
                         value: null,
                         child: Text(
                           'All Severities',
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      const DropdownMenuItem(
+                      DropdownMenuItem(
                         value: 'info',
                         child: Text('Info', overflow: TextOverflow.ellipsis),
                       ),
-                      const DropdownMenuItem(
+                      DropdownMenuItem(
                         value: 'warning',
                         child: Text('Warning', overflow: TextOverflow.ellipsis),
                       ),
-                      const DropdownMenuItem(
+                      DropdownMenuItem(
                         value: 'error',
                         child: Text('Error', overflow: TextOverflow.ellipsis),
                       ),
-                      const DropdownMenuItem(
+                      DropdownMenuItem(
                         value: 'critical',
                         child: Text(
                           'Critical',
@@ -398,9 +398,9 @@ class _AdminLogsScreenState extends ConsumerState<AdminLogsScreen> {
                       size: 48,
                     ),
                     const SizedBox(height: 16),
-                    Text(
+                    const Text(
                       'Error loading logs',
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: Colors.red,
                         fontSize: 18,
                         fontWeight: FontWeight.bold,

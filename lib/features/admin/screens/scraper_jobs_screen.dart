@@ -30,12 +30,14 @@ class _ScraperJobsScreenState extends ConsumerState<ScraperJobsScreen> {
             // Real-time update indicator
             jobsAsync.when(
               data: (jobs) {
-                final hasRunning = jobs.any((j) => j['status'] == 'running' || j['status'] == 'pending');
+                final hasRunning = jobs.any(
+                  (j) => j['status'] == 'running' || j['status'] == 'pending',
+                );
                 if (hasRunning) {
                   return Container(
                     width: 8,
                     height: 8,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: Colors.green,
                       shape: BoxShape.circle,
                     ),
@@ -44,7 +46,8 @@ class _ScraperJobsScreenState extends ConsumerState<ScraperJobsScreen> {
                       duration: const Duration(seconds: 1),
                       builder: (context, value, child) {
                         return Opacity(
-                          opacity: 0.5 + (0.5 * (0.5 + 0.5 * (value * 2 - 1).abs())),
+                          opacity:
+                              0.5 + (0.5 * (0.5 + 0.5 * (value * 2 - 1).abs())),
                           child: child,
                         );
                       },
@@ -123,7 +126,9 @@ class _ScraperJobsScreenState extends ConsumerState<ScraperJobsScreen> {
               data: (jobs) {
                 final filteredJobs = _selectedStatus == 'all'
                     ? jobs
-                    : jobs.where((job) => job['status'] == _selectedStatus).toList();
+                    : jobs
+                          .where((job) => job['status'] == _selectedStatus)
+                          .toList();
 
                 if (filteredJobs.isEmpty) {
                   return EmptyState(
@@ -175,10 +180,7 @@ class _ScraperJobsScreenState extends ConsumerState<ScraperJobsScreen> {
       decoration: BoxDecoration(
         color: AppTheme.cardBackground,
         border: Border(
-          bottom: BorderSide(
-            color: Colors.grey.withOpacity(0.3),
-            width: 1,
-          ),
+          bottom: BorderSide(color: Colors.grey.withOpacity(0.3), width: 1),
         ),
       ),
       child: Column(
@@ -194,7 +196,11 @@ class _ScraperJobsScreenState extends ConsumerState<ScraperJobsScreen> {
                       _buildStatusChip('all', 'All', allCount),
                       _buildStatusChip('pending', 'Pending', pendingCount),
                       _buildStatusChip('running', 'Running', runningCount),
-                      _buildStatusChip('completed', 'Completed', completedCount),
+                      _buildStatusChip(
+                        'completed',
+                        'Completed',
+                        completedCount,
+                      ),
                       _buildStatusChip('failed', 'Failed', failedCount),
                     ],
                   ),
@@ -244,7 +250,9 @@ class _ScraperJobsScreenState extends ConsumerState<ScraperJobsScreen> {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                 decoration: BoxDecoration(
-                  color: isSelected ? Colors.white.withOpacity(0.3) : Colors.grey.withOpacity(0.3),
+                  color: isSelected
+                      ? Colors.white.withOpacity(0.3)
+                      : Colors.grey.withOpacity(0.3),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Text(
@@ -340,8 +348,8 @@ class _ScraperJobsScreenState extends ConsumerState<ScraperJobsScreen> {
     final jobIdDisplay = jobIdStr.isNotEmpty && jobIdStr.length > 8
         ? jobIdStr.substring(0, 8)
         : jobIdStr;
-    String jobTitle = mangaTitle ?? 'Job $jobIdDisplay...';
-    
+    final String jobTitle = mangaTitle ?? 'Job $jobIdDisplay...';
+
     // Add scraper name
     String scraperName = '';
     if (jobType.contains('asurascanz')) {
@@ -369,7 +377,9 @@ class _ScraperJobsScreenState extends ConsumerState<ScraperJobsScreen> {
               child: Text(
                 jobTitle,
                 style: TextStyle(
-                  fontWeight: status == 'running' ? FontWeight.bold : FontWeight.normal,
+                  fontWeight: status == 'running'
+                      ? FontWeight.bold
+                      : FontWeight.normal,
                 ),
               ),
             ),
@@ -414,14 +424,15 @@ class _ScraperJobsScreenState extends ConsumerState<ScraperJobsScreen> {
                 if (job['updatedAt'] != null)
                   Text(
                     _getTimeAgo(_parseDateTime(job['updatedAt'])),
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 11,
                       color: AppTheme.textSecondary,
                     ),
                   ),
               ],
             ),
-            if (progress.isNotEmpty && (status == 'running' || status == 'pending')) ...[
+            if (progress.isNotEmpty &&
+                (status == 'running' || status == 'pending')) ...[
               const SizedBox(height: 12),
               // Enhanced progress bar
               Column(
@@ -430,7 +441,7 @@ class _ScraperJobsScreenState extends ConsumerState<ScraperJobsScreen> {
                   if (currentStep.isNotEmpty || message.isNotEmpty) ...[
                     Text(
                       currentStep.isNotEmpty ? currentStep : message,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 11,
                         color: AppTheme.textSecondary,
                         fontStyle: FontStyle.italic,
@@ -467,7 +478,9 @@ class _ScraperJobsScreenState extends ConsumerState<ScraperJobsScreen> {
                           height: 12,
                           child: CircularProgressIndicator(
                             strokeWidth: 2,
-                            valueColor: AlwaysStoppedAnimation<Color>(statusColor),
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              statusColor,
+                            ),
                           ),
                         ),
                     ],
@@ -485,7 +498,11 @@ class _ScraperJobsScreenState extends ConsumerState<ScraperJobsScreen> {
                 ),
                 child: Row(
                   children: [
-                    const Icon(Icons.check_circle, size: 16, color: Colors.green),
+                    const Icon(
+                      Icons.check_circle,
+                      size: 16,
+                      color: Colors.green,
+                    ),
                     const SizedBox(width: 8),
                     Text(
                       'Completed: $total items processed',
@@ -510,15 +527,16 @@ class _ScraperJobsScreenState extends ConsumerState<ScraperJobsScreen> {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Icon(Icons.error_outline, size: 16, color: Colors.red),
+                    const Icon(
+                      Icons.error_outline,
+                      size: 16,
+                      color: Colors.red,
+                    ),
                     const SizedBox(width: 8),
                     Expanded(
                       child: Text(
                         error,
-                        style: const TextStyle(
-                          color: Colors.red,
-                          fontSize: 11,
-                        ),
+                        style: const TextStyle(color: Colors.red, fontSize: 11),
                       ),
                     ),
                   ],
@@ -546,7 +564,10 @@ class _ScraperJobsScreenState extends ConsumerState<ScraperJobsScreen> {
                     _parseDateTime(job['updatedAt']).toString(),
                   ),
                 if (job['mangaId'] != null)
-                  _buildInfoRow('Manga ID', job['mangaId']?.toString() ?? 'N/A'),
+                  _buildInfoRow(
+                    'Manga ID',
+                    job['mangaId']?.toString() ?? 'N/A',
+                  ),
                 if (job['url'] != null)
                   _buildInfoRow('URL', job['url']?.toString() ?? 'N/A'),
                 if (status == 'running')
@@ -631,4 +652,3 @@ class _ScraperJobsScreenState extends ConsumerState<ScraperJobsScreen> {
     }
   }
 }
-

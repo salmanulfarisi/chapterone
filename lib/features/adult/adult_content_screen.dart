@@ -30,37 +30,23 @@ class AdultContentScreen extends ConsumerWidget {
           title: const Text('Adult Content'),
           backgroundColor: AppTheme.darkBackground,
         ),
-        body: const Center(
-          child: CircularProgressIndicator(),
-        ),
+        body: const Center(child: CircularProgressIndicator()),
       );
     }
 
     final trendingAdult = ref.watch(
       mangaListProvider(
-        MangaListParams(
-          limit: '20',
-          sortBy: 'totalViews',
-          source: 'hotcomics',
-        ),
+        MangaListParams(limit: '20', sortBy: 'totalViews', source: 'hotcomics'),
       ),
     );
     final newAdult = ref.watch(
       mangaListProvider(
-        MangaListParams(
-          limit: '20',
-          sortBy: 'createdAt',
-          source: 'hotcomics',
-        ),
+        MangaListParams(limit: '20', sortBy: 'createdAt', source: 'hotcomics'),
       ),
     );
     final popularAdult = ref.watch(
       mangaListProvider(
-        MangaListParams(
-          limit: '20',
-          sortBy: 'rating',
-          source: 'hotcomics',
-        ),
+        MangaListParams(limit: '20', sortBy: 'rating', source: 'hotcomics'),
       ),
     );
 
@@ -94,12 +80,7 @@ class AdultContentScreen extends ConsumerWidget {
         onRefresh: () async {
           ref.invalidate(mangaListProvider);
         },
-        child: _buildContent(
-          context,
-          trendingAdult,
-          newAdult,
-          popularAdult,
-        ),
+        child: _buildContent(context, trendingAdult, newAdult, popularAdult),
       ),
     );
   }
@@ -148,21 +129,18 @@ class AdultContentScreen extends ConsumerWidget {
                 width: 1,
               ),
             ),
-            child: Row(
+            child: const Row(
               children: [
-                const Icon(
+                Icon(
                   Icons.warning_amber_rounded,
                   color: AppTheme.primaryRed,
                   size: 24,
                 ),
-                const SizedBox(width: 12),
+                SizedBox(width: 12),
                 Expanded(
                   child: Text(
                     'This section contains adult content. You must be 18+ to access.',
-                    style: TextStyle(
-                      color: AppTheme.textPrimary,
-                      fontSize: 12,
-                    ),
+                    style: TextStyle(color: AppTheme.textPrimary, fontSize: 12),
                   ),
                 ),
               ],
@@ -246,7 +224,9 @@ class AdultContentScreen extends ConsumerWidget {
                         MangaCard(
                           title: item.title,
                           cover: item.cover,
-                          genre: item.genres.isNotEmpty ? item.genres.first : null,
+                          genre: item.genres.isNotEmpty
+                              ? item.genres.first
+                              : null,
                           latestChapter: item.totalChapters,
                           onTap: () {
                             context.push('/manga/${item.id}');
@@ -282,7 +262,7 @@ class AdultContentScreen extends ConsumerWidget {
               );
             },
             loading: () => const ShimmerMangaList(),
-            error: (error, stack) => SizedBox(
+            error: (error, stack) => const SizedBox(
               height: 200,
               child: Center(
                 child: Text(
@@ -297,4 +277,3 @@ class AdultContentScreen extends ConsumerWidget {
     );
   }
 }
-

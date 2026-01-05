@@ -29,10 +29,7 @@ class _AdminNotificationsScreenState
 
   Future<void> _sendTestNotification() async {
     if (_titleController.text.isEmpty || _bodyController.text.isEmpty) {
-      CustomSnackbar.error(
-        context,
-        'Please fill in title and body',
-      );
+      CustomSnackbar.error(context, 'Please fill in title and body');
       return;
     }
 
@@ -48,10 +45,7 @@ class _AdminNotificationsScreenState
         // Send to all users (bulk notification)
         final response = await apiService.post(
           '/admin/notifications/send-bulk',
-          data: {
-            'title': _titleController.text,
-            'body': _bodyController.text,
-          },
+          data: {'title': _titleController.text, 'body': _bodyController.text},
         );
 
         if (response.statusCode == 200 || response.statusCode == 201) {
@@ -74,10 +68,7 @@ class _AdminNotificationsScreenState
         );
 
         if (response.statusCode == 200 || response.statusCode == 201) {
-          CustomSnackbar.success(
-            context,
-            'Notification sent successfully!',
-          );
+          CustomSnackbar.success(context, 'Notification sent successfully!');
           _titleController.clear();
           _bodyController.clear();
           _userIdController.clear();
@@ -100,9 +91,7 @@ class _AdminNotificationsScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Notification Manager'),
-      ),
+      appBar: AppBar(title: const Text('Notification Manager')),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -114,18 +103,16 @@ class _AdminNotificationsScreenState
               decoration: BoxDecoration(
                 color: AppTheme.cardBackground,
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(
-                  color: AppTheme.primaryRed.withOpacity(0.3),
-                ),
+                border: Border.all(color: AppTheme.primaryRed.withOpacity(0.3)),
               ),
-              child: Row(
+              child: const Row(
                 children: [
                   Icon(
                     Icons.info_outline,
                     color: AppTheme.primaryRed,
                     size: 24,
                   ),
-                  const SizedBox(width: 12),
+                  SizedBox(width: 12),
                   Expanded(
                     child: Text(
                       'Send push notifications to users. Leave User ID empty to send to all users.',
@@ -151,7 +138,7 @@ class _AdminNotificationsScreenState
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Send Notification',
                     style: TextStyle(
                       fontSize: 18,
@@ -165,7 +152,8 @@ class _AdminNotificationsScreenState
                   TextField(
                     controller: _userIdController,
                     decoration: InputDecoration(
-                      labelText: 'User ID (Optional - leave empty for all users)',
+                      labelText:
+                          'User ID (Optional - leave empty for all users)',
                       hintText: 'Enter user ID or leave empty',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
@@ -257,7 +245,7 @@ class _AdminNotificationsScreenState
             const SizedBox(height: 24),
 
             // Quick Actions
-            Text(
+            const Text(
               'Quick Actions',
               style: TextStyle(
                 fontSize: 16,
@@ -277,7 +265,9 @@ class _AdminNotificationsScreenState
                   ListTile(
                     leading: const Icon(Icons.new_releases),
                     title: const Text('New Chapter Template'),
-                    subtitle: const Text('Template for new chapter notifications'),
+                    subtitle: const Text(
+                      'Template for new chapter notifications',
+                    ),
                     trailing: const Icon(Icons.chevron_right),
                     onTap: () {
                       _titleController.text = 'New Chapter Available!';
@@ -289,7 +279,9 @@ class _AdminNotificationsScreenState
                   ListTile(
                     leading: const Icon(Icons.book),
                     title: const Text('New Manga Template'),
-                    subtitle: const Text('Template for new manga notifications'),
+                    subtitle: const Text(
+                      'Template for new manga notifications',
+                    ),
                     trailing: const Icon(Icons.chevron_right),
                     onTap: () {
                       _titleController.text = 'New Manga Added!';
@@ -318,4 +310,3 @@ class _AdminNotificationsScreenState
     );
   }
 }
-

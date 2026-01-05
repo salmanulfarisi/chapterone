@@ -34,7 +34,7 @@ class _NotificationPreferencesScreenState
                 color: AppTheme.textSecondary,
               ),
               const SizedBox(height: 16),
-              Text(
+              const Text(
                 'Failed to load preferences',
                 style: TextStyle(color: AppTheme.textSecondary),
               ),
@@ -298,10 +298,10 @@ class _NotificationPreferencesScreenState
               width: 1,
             ),
           ),
-          child: Row(
+          child: const Row(
             children: [
               Icon(Icons.lightbulb_outline, color: AppTheme.primaryRed),
-              const SizedBox(width: 12),
+              SizedBox(width: 12),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -313,7 +313,7 @@ class _NotificationPreferencesScreenState
                         color: AppTheme.primaryRed,
                       ),
                     ),
-                    const SizedBox(height: 4),
+                    SizedBox(height: 4),
                     Text(
                       'Notifications are automatically scheduled during your active hours for better engagement.',
                       style: TextStyle(

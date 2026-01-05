@@ -24,7 +24,7 @@ class ShimmerMangaCard extends StatelessWidget {
 
 class ShimmerMangaList extends StatelessWidget {
   final int itemCount;
-  
+
   const ShimmerMangaList({super.key, this.itemCount = 10});
 
   @override
@@ -36,8 +36,8 @@ class ShimmerMangaList extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         itemCount: itemCount,
         itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.only(right: 12.0),
+          return const Padding(
+            padding: EdgeInsets.only(right: 12.0),
             child: ShimmerMangaCard(),
           );
         },
@@ -49,7 +49,7 @@ class ShimmerMangaList extends StatelessWidget {
 class ShimmerText extends StatelessWidget {
   final double width;
   final double height;
-  
+
   const ShimmerText({
     super.key,
     this.width = double.infinity,
@@ -84,11 +84,8 @@ class ShimmerBanner extends StatelessWidget {
       child: Container(
         height: 400,
         width: double.infinity,
-        decoration: BoxDecoration(
-          color: AppTheme.cardBackground,
-        ),
+        decoration: const BoxDecoration(color: AppTheme.cardBackground),
       ),
     );
   }
 }
-

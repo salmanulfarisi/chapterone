@@ -256,12 +256,12 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
     return historyAsync.when(
       data: (history) {
         if (history.isEmpty) {
-          return Center(
+          return const Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(Icons.history, size: 64, color: AppTheme.textSecondary),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
                 Text(
                   'No search history',
                   style: TextStyle(color: AppTheme.textSecondary),
@@ -284,7 +284,10 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                 title: Text(item.query),
                 subtitle: Text(
                   '${item.resultCount} results • ${DateFormat('MMM d, y').format(item.searchedAt)}',
-                  style: TextStyle(color: AppTheme.textSecondary, fontSize: 12),
+                  style: const TextStyle(
+                    color: AppTheme.textSecondary,
+                    fontSize: 12,
+                  ),
                 ),
                 trailing: IconButton(
                   icon: const Icon(Icons.close, size: 20),
@@ -307,7 +310,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
         );
       },
       loading: () => const Center(child: CircularProgressIndicator()),
-      error: (_, __) => Center(
+      error: (_, __) => const Center(
         child: Text(
           'Failed to load search history',
           style: TextStyle(color: AppTheme.textSecondary),
@@ -322,7 +325,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
     return savedAsync.when(
       data: (saved) {
         if (saved.isEmpty) {
-          return Center(
+          return const Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -331,12 +334,12 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                   size: 64,
                   color: AppTheme.textSecondary,
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
                 Text(
                   'No saved searches',
                   style: TextStyle(color: AppTheme.textSecondary),
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: 8),
                 Text(
                   'Save your favorite searches for quick access',
                   style: TextStyle(color: AppTheme.textTertiary, fontSize: 12),
@@ -360,7 +363,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                 subtitle: item.query != null && item.query!.isNotEmpty
                     ? Text(
                         item.query!,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: AppTheme.textSecondary,
                           fontSize: 12,
                         ),
@@ -390,7 +393,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
         );
       },
       loading: () => const Center(child: CircularProgressIndicator()),
-      error: (_, __) => Center(
+      error: (_, __) => const Center(
         child: Text(
           'Failed to load saved searches',
           style: TextStyle(color: AppTheme.textSecondary),
@@ -405,7 +408,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
     return trendingAsync.when(
       data: (trending) {
         if (trending.isEmpty) {
-          return Center(
+          return const Center(
             child: Text(
               'No trending searches',
               style: TextStyle(color: AppTheme.textSecondary),
@@ -439,7 +442,10 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                 title: Text(item.query),
                 subtitle: Text(
                   '${item.count} searches',
-                  style: TextStyle(color: AppTheme.textSecondary, fontSize: 12),
+                  style: const TextStyle(
+                    color: AppTheme.textSecondary,
+                    fontSize: 12,
+                  ),
                 ),
                 trailing: const Icon(
                   Icons.trending_up,
@@ -459,7 +465,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
         );
       },
       loading: () => const Center(child: CircularProgressIndicator()),
-      error: (_, __) => Center(
+      error: (_, __) => const Center(
         child: Text(
           'Failed to load trending searches',
           style: TextStyle(color: AppTheme.textSecondary),
@@ -483,12 +489,12 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
     return searchResults.when(
       data: (manga) {
         if (manga.isEmpty) {
-          return Center(
+          return const Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(Icons.search_off, size: 64, color: AppTheme.textSecondary),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
                 Text(
                   'No results found',
                   style: TextStyle(color: AppTheme.textSecondary),
@@ -521,7 +527,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
         );
       },
       loading: () => const Center(child: CircularProgressIndicator()),
-      error: (error, stack) => Center(
+      error: (error, stack) => const Center(
         child: Text(
           'Error searching',
           style: TextStyle(color: AppTheme.textSecondary),
@@ -556,7 +562,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                   runSpacing: 8,
                   children: trending.take(10).map((item) {
                     return ActionChip(
-                      avatar: Icon(
+                      avatar: const Icon(
                         Icons.trending_up,
                         size: 16,
                         color: AppTheme.primaryRed,
@@ -784,10 +790,10 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                     children: [
                       Expanded(
                         child: TextField(
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             labelText: 'Min Rating',
                             hintText: '0.0',
-                            border: const OutlineInputBorder(),
+                            border: OutlineInputBorder(),
                           ),
                           keyboardType: TextInputType.number,
                           controller: TextEditingController(
@@ -803,10 +809,10 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                       const SizedBox(width: 8),
                       Expanded(
                         child: TextField(
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             labelText: 'Max Rating',
                             hintText: '10.0',
-                            border: const OutlineInputBorder(),
+                            border: OutlineInputBorder(),
                           ),
                           keyboardType: TextInputType.number,
                           controller: TextEditingController(

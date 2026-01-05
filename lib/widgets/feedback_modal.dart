@@ -68,7 +68,8 @@ class _FeedbackModalState extends ConsumerState<FeedbackModal> {
           'message': widget.type == 'request'
               ? 'Requested Manga: ${_mangaTitleController.text.trim()}\n\n${_messageController.text.trim()}'
               : _messageController.text.trim(),
-          if (widget.type == 'request' && _mangaTitleController.text.trim().isNotEmpty)
+          if (widget.type == 'request' &&
+              _mangaTitleController.text.trim().isNotEmpty)
             'mangaTitle': _mangaTitleController.text.trim(),
         },
       );
@@ -86,15 +87,17 @@ class _FeedbackModalState extends ConsumerState<FeedbackModal> {
                     widget.type == 'contact'
                         ? 'Message sent! We\'ll get back to you soon.'
                         : widget.type == 'request'
-                            ? 'Request submitted! We\'ll review it soon.'
-                            : 'Thank you for your feedback!',
+                        ? 'Request submitted! We\'ll review it soon.'
+                        : 'Thank you for your feedback!',
                   ),
                 ),
               ],
             ),
             backgroundColor: Colors.green,
             behavior: SnackBarBehavior.floating,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
           ),
         );
       }
@@ -111,7 +114,9 @@ class _FeedbackModalState extends ConsumerState<FeedbackModal> {
             ),
             backgroundColor: Colors.red,
             behavior: SnackBarBehavior.floating,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
           ),
         );
       }
@@ -126,15 +131,12 @@ class _FeedbackModalState extends ConsumerState<FeedbackModal> {
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     final maxHeight = screenHeight * 0.85; // Use 85% of screen height
-    
+
     return Dialog(
       backgroundColor: Colors.transparent,
       insetPadding: const EdgeInsets.all(16),
       child: Container(
-        constraints: BoxConstraints(
-          maxWidth: 500,
-          maxHeight: maxHeight,
-        ),
+        constraints: BoxConstraints(maxWidth: 500, maxHeight: maxHeight),
         decoration: BoxDecoration(
           color: AppTheme.cardBackground,
           borderRadius: BorderRadius.circular(20),
@@ -172,10 +174,7 @@ class _FeedbackModalState extends ConsumerState<FeedbackModal> {
                         color: Colors.white.withOpacity(0.2),
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      child: Text(
-                        _icon,
-                        style: const TextStyle(fontSize: 24),
-                      ),
+                      child: Text(_icon, style: const TextStyle(fontSize: 24)),
                     ),
                     const SizedBox(width: 16),
                     Expanded(
@@ -196,8 +195,8 @@ class _FeedbackModalState extends ConsumerState<FeedbackModal> {
                             widget.type == 'contact'
                                 ? 'We\'re here to help'
                                 : widget.type == 'request'
-                                    ? 'Request any manga you\'d like to see added'
-                                    : 'Share your thoughts with us',
+                                ? 'Request any manga you\'d like to see added'
+                                : 'Share your thoughts with us',
                             style: TextStyle(
                               fontSize: 14,
                               color: Colors.white.withOpacity(0.9),
@@ -233,14 +232,14 @@ class _FeedbackModalState extends ConsumerState<FeedbackModal> {
                                 color: AppTheme.primaryRed.withOpacity(0.3),
                               ),
                             ),
-                            child: Row(
+                            child: const Row(
                               children: [
                                 Icon(
                                   Icons.info_outline,
                                   color: AppTheme.primaryRed,
                                   size: 20,
                                 ),
-                                const SizedBox(width: 8),
+                                SizedBox(width: 8),
                                 Expanded(
                                   child: Text(
                                     'Request any manga title you\'d like us to add to our collection',
@@ -254,7 +253,7 @@ class _FeedbackModalState extends ConsumerState<FeedbackModal> {
                             ),
                           ),
                           const SizedBox(height: 16),
-                          Text(
+                          const Text(
                             'Manga Title *',
                             style: TextStyle(
                               fontSize: 14,
@@ -270,15 +269,26 @@ class _FeedbackModalState extends ConsumerState<FeedbackModal> {
                               prefixIcon: const Icon(Icons.book_outlined),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(12),
-                                borderSide: BorderSide(color: AppTheme.textSecondary.withOpacity(0.3)),
+                                borderSide: BorderSide(
+                                  color: AppTheme.textSecondary.withOpacity(
+                                    0.3,
+                                  ),
+                                ),
                               ),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(12),
-                                borderSide: BorderSide(color: AppTheme.textSecondary.withOpacity(0.3)),
+                                borderSide: BorderSide(
+                                  color: AppTheme.textSecondary.withOpacity(
+                                    0.3,
+                                  ),
+                                ),
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(12),
-                                borderSide: const BorderSide(color: AppTheme.primaryRed, width: 2),
+                                borderSide: const BorderSide(
+                                  color: AppTheme.primaryRed,
+                                  width: 2,
+                                ),
                               ),
                               filled: true,
                               fillColor: AppTheme.darkBackground,
@@ -294,7 +304,7 @@ class _FeedbackModalState extends ConsumerState<FeedbackModal> {
                           ),
                           const SizedBox(height: 20),
                         ],
-                        Text(
+                        const Text(
                           'Subject',
                           style: TextStyle(
                             fontSize: 14,
@@ -312,15 +322,22 @@ class _FeedbackModalState extends ConsumerState<FeedbackModal> {
                             prefixIcon: const Icon(Icons.subject_outlined),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
-                              borderSide: BorderSide(color: AppTheme.textSecondary.withOpacity(0.3)),
+                              borderSide: BorderSide(
+                                color: AppTheme.textSecondary.withOpacity(0.3),
+                              ),
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
-                              borderSide: BorderSide(color: AppTheme.textSecondary.withOpacity(0.3)),
+                              borderSide: BorderSide(
+                                color: AppTheme.textSecondary.withOpacity(0.3),
+                              ),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
-                              borderSide: const BorderSide(color: AppTheme.primaryRed, width: 2),
+                              borderSide: const BorderSide(
+                                color: AppTheme.primaryRed,
+                                width: 2,
+                              ),
                             ),
                             filled: true,
                             fillColor: AppTheme.darkBackground,
@@ -333,7 +350,7 @@ class _FeedbackModalState extends ConsumerState<FeedbackModal> {
                           },
                         ),
                         const SizedBox(height: 20),
-                        Text(
+                        const Text(
                           'Message',
                           style: TextStyle(
                             fontSize: 14,
@@ -349,23 +366,30 @@ class _FeedbackModalState extends ConsumerState<FeedbackModal> {
                             hintText: widget.type == 'contact'
                                 ? 'Tell us how we can help...'
                                 : widget.type == 'request'
-                                    ? 'Any additional details about your request...'
-                                    : 'Share your feedback or suggestions...',
+                                ? 'Any additional details about your request...'
+                                : 'Share your feedback or suggestions...',
                             prefixIcon: const Padding(
                               padding: EdgeInsets.only(bottom: 100),
                               child: Icon(Icons.message_outlined),
                             ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
-                              borderSide: BorderSide(color: AppTheme.textSecondary.withOpacity(0.3)),
+                              borderSide: BorderSide(
+                                color: AppTheme.textSecondary.withOpacity(0.3),
+                              ),
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
-                              borderSide: BorderSide(color: AppTheme.textSecondary.withOpacity(0.3)),
+                              borderSide: BorderSide(
+                                color: AppTheme.textSecondary.withOpacity(0.3),
+                              ),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
-                              borderSide: const BorderSide(color: AppTheme.primaryRed, width: 2),
+                              borderSide: const BorderSide(
+                                color: AppTheme.primaryRed,
+                                width: 2,
+                              ),
                             ),
                             filled: true,
                             fillColor: AppTheme.darkBackground,
@@ -401,17 +425,19 @@ class _FeedbackModalState extends ConsumerState<FeedbackModal> {
                                     height: 24,
                                     child: CircularProgressIndicator(
                                       strokeWidth: 2,
-                                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                        Colors.white,
+                                      ),
                                     ),
                                   )
-                                : Row(
+                                : const Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      const Icon(Icons.send, size: 20),
-                                      const SizedBox(width: 8),
+                                      Icon(Icons.send, size: 20),
+                                      SizedBox(width: 8),
                                       Text(
                                         'Submit',
-                                        style: const TextStyle(
+                                        style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w600,
                                         ),
@@ -432,4 +458,3 @@ class _FeedbackModalState extends ConsumerState<FeedbackModal> {
     );
   }
 }
-

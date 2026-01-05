@@ -1,10 +1,14 @@
 class ApiConstants {
   // Base URL - should be loaded from .env in production
-  static const String baseUrl = String.fromEnvironment(
-    'API_BASE_URL',
-    defaultValue: 'http://192.168.1.104:3000/api',
-    // defaultValue: 'http://localhost:3000/api',
-  );
+
+  // TODO: Replace with your actual API base URL
+  static const String baseUrl = 'https://api.chapterone.live/api';
+
+  // static const String baseUrl = String.fromEnvironment(
+  //   'API_BASE_URL',
+  //   defaultValue: 'http://192.168.1.104:3000/api',
+  //   // defaultValue: 'http://localhost:3000/api',
+  // );
 
   // Auth endpoints
   static const String login = '/auth/login';
@@ -35,7 +39,8 @@ class ApiConstants {
   // Notification endpoints
   static const String notifications = '/notifications';
   static const String notificationPreferences = '/notifications/preferences';
-  static const String notificationMangaSettings = '/notifications/manga-settings';
+  static const String notificationMangaSettings =
+      '/notifications/manga-settings';
   static const String notificationMarkRead = '/notifications/mark-read';
   static const String notificationMarkAllRead = '/notifications/mark-all-read';
   static const String notificationDelete = '/notifications/delete';
@@ -80,13 +85,14 @@ class ApiConstants {
   static const String adminLogs = '/admin/logs';
   static const String adminNotifications = '/admin/notifications';
   static const String adminFeedback = '/admin/feedback';
-  
+
   // Admin analytics endpoints
   static const String adminUserActivity = '/admin/analytics/user-activity';
   static const String adminPopularContent = '/admin/analytics/popular-content';
   static const String adminUserRetention = '/admin/analytics/user-retention';
   static const String adminRevenue = '/admin/analytics/revenue';
-  static const String adminContentPerformance = '/admin/analytics/content-performance';
+  static const String adminContentPerformance =
+      '/admin/analytics/content-performance';
 
   // Headers
   static const String authorizationHeader = 'Authorization';

@@ -15,10 +15,12 @@ class NotificationCenterScreen extends ConsumerStatefulWidget {
   const NotificationCenterScreen({super.key});
 
   @override
-  ConsumerState<NotificationCenterScreen> createState() => _NotificationCenterScreenState();
+  ConsumerState<NotificationCenterScreen> createState() =>
+      _NotificationCenterScreenState();
 }
 
-class _NotificationCenterScreenState extends ConsumerState<NotificationCenterScreen> {
+class _NotificationCenterScreenState
+    extends ConsumerState<NotificationCenterScreen> {
   @override
   Widget build(BuildContext context) {
     final notificationsAsync = ref.watch(notificationsProvider);
@@ -47,14 +49,17 @@ class _NotificationCenterScreenState extends ConsumerState<NotificationCenterScr
       body: notificationsAsync.when(
         data: (notifications) {
           if (notifications.isEmpty) {
-            return EmptyState(
+            return const EmptyState(
               title: 'No Notifications',
-              message: 'You\'re all caught up! New notifications will appear here.',
+              message:
+                  'You\'re all caught up! New notifications will appear here.',
               icon: Icons.notifications_none,
             );
           }
 
-          final unreadNotifications = notifications.where((n) => !n.read).toList();
+          final unreadNotifications = notifications
+              .where((n) => !n.read)
+              .toList();
           final readNotifications = notifications.where((n) => n.read).toList();
 
           return AnimatedRefreshIndicator(
@@ -75,7 +80,9 @@ class _NotificationCenterScreenState extends ConsumerState<NotificationCenterScr
                     ),
                   ),
                   const SizedBox(height: 12),
-                  ...unreadNotifications.map((notification) => _buildNotificationItem(notification)),
+                  ...unreadNotifications.map(
+                    (notification) => _buildNotificationItem(notification),
+                  ),
                   const SizedBox(height: 24),
                 ],
                 if (readNotifications.isNotEmpty) ...[
@@ -88,7 +95,9 @@ class _NotificationCenterScreenState extends ConsumerState<NotificationCenterScr
                     ),
                   ),
                   const SizedBox(height: 12),
-                  ...readNotifications.map((notification) => _buildNotificationItem(notification)),
+                  ...readNotifications.map(
+                    (notification) => _buildNotificationItem(notification),
+                  ),
                 ],
               ],
             ),
@@ -98,8 +107,8 @@ class _NotificationCenterScreenState extends ConsumerState<NotificationCenterScr
           padding: const EdgeInsets.all(16),
           children: List.generate(
             5,
-            (index) => Padding(
-              padding: const EdgeInsets.only(bottom: 12),
+            (index) => const Padding(
+              padding: EdgeInsets.only(bottom: 12),
               child: SkeletonSearchResult(),
             ),
           ),
@@ -216,7 +225,7 @@ class _NotificationCenterScreenState extends ConsumerState<NotificationCenterScr
                     const SizedBox(height: 4),
                     Text(
                       notification.body,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 13,
                         color: AppTheme.textSecondary,
                       ),
@@ -226,7 +235,7 @@ class _NotificationCenterScreenState extends ConsumerState<NotificationCenterScr
                     const SizedBox(height: 8),
                     Text(
                       _formatTime(notification.createdAt),
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 11,
                         color: AppTheme.textTertiary,
                       ),
@@ -279,7 +288,9 @@ class _NotificationCenterScreenState extends ConsumerState<NotificationCenterScr
   Future<void> _markAsRead(String notificationId) async {
     try {
       final apiService = ref.read(apiServiceProvider);
-      await apiService.put('${ApiConstants.notificationMarkRead}/$notificationId');
+      await apiService.put(
+        '${ApiConstants.notificationMarkRead}/$notificationId',
+      );
       ref.invalidate(notificationsProvider);
       ref.invalidate(unreadNotificationsCountProvider);
     } catch (e) {
@@ -301,7 +312,9 @@ class _NotificationCenterScreenState extends ConsumerState<NotificationCenterScr
   Future<void> _deleteNotification(String notificationId) async {
     try {
       final apiService = ref.read(apiServiceProvider);
-      await apiService.delete('${ApiConstants.notificationDelete}/$notificationId');
+      await apiService.delete(
+        '${ApiConstants.notificationDelete}/$notificationId',
+      );
       ref.invalidate(notificationsProvider);
       ref.invalidate(unreadNotificationsCountProvider);
     } catch (e) {
@@ -309,4 +322,3 @@ class _NotificationCenterScreenState extends ConsumerState<NotificationCenterScr
     }
   }
 }
-

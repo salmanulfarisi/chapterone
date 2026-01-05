@@ -53,10 +53,7 @@ final appRouter = GoRouter(
       builder: (context, state) {
         final mangaId = state.uri.queryParameters['mangaId'];
         final showAd = state.uri.queryParameters['showAd'] != 'false';
-        return AgeVerificationScreen(
-          mangaId: mangaId,
-          showAd: showAd,
-        );
+        return AgeVerificationScreen(mangaId: mangaId, showAd: showAd);
       },
     ),
     GoRoute(path: '/home', builder: (context, state) => const HomeScreen()),
@@ -75,15 +72,13 @@ final appRouter = GoRouter(
             const begin = Offset(1.0, 0.0);
             const end = Offset.zero;
             const curve = Curves.easeInOutCubic;
-            var tween = Tween(begin: begin, end: end).chain(
-              CurveTween(curve: curve),
-            );
+            final tween = Tween(
+              begin: begin,
+              end: end,
+            ).chain(CurveTween(curve: curve));
             return SlideTransition(
               position: animation.drive(tween),
-              child: FadeTransition(
-                opacity: animation,
-                child: child,
-              ),
+              child: FadeTransition(opacity: animation, child: child),
             );
           },
         );

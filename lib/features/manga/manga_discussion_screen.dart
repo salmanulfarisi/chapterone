@@ -15,7 +15,8 @@ class MangaDiscussionScreen extends ConsumerStatefulWidget {
   const MangaDiscussionScreen({super.key, required this.mangaId});
 
   @override
-  ConsumerState<MangaDiscussionScreen> createState() => _MangaDiscussionScreenState();
+  ConsumerState<MangaDiscussionScreen> createState() =>
+      _MangaDiscussionScreenState();
 }
 
 class _MangaDiscussionScreenState extends ConsumerState<MangaDiscussionScreen> {
@@ -64,7 +65,9 @@ class _MangaDiscussionScreenState extends ConsumerState<MangaDiscussionScreen> {
             ),
             backgroundColor: Colors.green,
             behavior: SnackBarBehavior.floating,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
           ),
         );
       }
@@ -81,7 +84,9 @@ class _MangaDiscussionScreenState extends ConsumerState<MangaDiscussionScreen> {
             ),
             backgroundColor: Colors.red,
             behavior: SnackBarBehavior.floating,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
           ),
         );
       }
@@ -121,7 +126,9 @@ class _MangaDiscussionScreenState extends ConsumerState<MangaDiscussionScreen> {
             ),
             backgroundColor: Colors.green,
             behavior: SnackBarBehavior.floating,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
           ),
         );
       }
@@ -138,7 +145,9 @@ class _MangaDiscussionScreenState extends ConsumerState<MangaDiscussionScreen> {
             ),
             backgroundColor: Colors.red,
             behavior: SnackBarBehavior.floating,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
           ),
         );
       }
@@ -188,7 +197,7 @@ class _MangaDiscussionScreenState extends ConsumerState<MangaDiscussionScreen> {
                 manga?.title ?? 'Discussion',
                 style: const TextStyle(fontSize: 18),
               ),
-              Text(
+              const Text(
                 'Community Discussion',
                 style: TextStyle(
                   fontSize: 12,
@@ -220,18 +229,18 @@ class _MangaDiscussionScreenState extends ConsumerState<MangaDiscussionScreen> {
                       children: [
                         Container(
                           padding: const EdgeInsets.all(24),
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             color: AppTheme.cardBackground,
                             shape: BoxShape.circle,
                           ),
-                          child: Icon(
+                          child: const Icon(
                             Icons.forum_outlined,
                             size: 64,
                             color: AppTheme.textSecondary,
                           ),
                         ),
                         const SizedBox(height: 24),
-                        Text(
+                        const Text(
                           'No comments yet',
                           style: TextStyle(
                             fontSize: 20,
@@ -240,7 +249,7 @@ class _MangaDiscussionScreenState extends ConsumerState<MangaDiscussionScreen> {
                           ),
                         ),
                         const SizedBox(height: 8),
-                        Text(
+                        const Text(
                           'Be the first to start the discussion!',
                           style: TextStyle(
                             fontSize: 14,
@@ -261,21 +270,27 @@ class _MangaDiscussionScreenState extends ConsumerState<MangaDiscussionScreen> {
                     itemCount: comments.length,
                     itemBuilder: (context, index) {
                       final comment = comments[index];
-                      final replies = comment['replies'] as List<dynamic>? ?? [];
-                      
+                      final replies =
+                          comment['replies'] as List<dynamic>? ?? [];
+
                       return Padding(
-                        padding: EdgeInsets.only(bottom: index < comments.length - 1 ? 20 : 0),
+                        padding: EdgeInsets.only(
+                          bottom: index < comments.length - 1 ? 20 : 0,
+                        ),
                         child: _MainCommentCard(
                           comment: comment,
                           replies: replies,
                           onReply: () {
-                            setState(() => _replyingToCommentId = comment['_id']);
+                            setState(
+                              () => _replyingToCommentId = comment['_id'],
+                            );
                           },
                           onLike: () => _toggleLike(
                             comment['_id'],
                             comment['isLiked'] ?? false,
                           ),
-                          onReplyLike: (replyId, isLiked) => _toggleLike(replyId, isLiked),
+                          onReplyLike: (replyId, isLiked) =>
+                              _toggleLike(replyId, isLiked),
                           isReplying: _replyingToCommentId == comment['_id'],
                           replyController: _replyController,
                           onSubmitReply: () => _submitReply(comment['_id']),
@@ -290,12 +305,12 @@ class _MangaDiscussionScreenState extends ConsumerState<MangaDiscussionScreen> {
                   ),
                 );
               },
-              loading: () => Center(
+              loading: () => const Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const CircularProgressIndicator(color: AppTheme.primaryRed),
-                    const SizedBox(height: 16),
+                    CircularProgressIndicator(color: AppTheme.primaryRed),
+                    SizedBox(height: 16),
                     Text(
                       'Loading comments...',
                       style: TextStyle(color: AppTheme.textSecondary),
@@ -307,13 +322,13 @@ class _MangaDiscussionScreenState extends ConsumerState<MangaDiscussionScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.error_outline,
                       size: 64,
                       color: AppTheme.textSecondary,
                     ),
                     const SizedBox(height: 16),
-                    Text(
+                    const Text(
                       'Error loading comments',
                       style: TextStyle(
                         fontSize: 18,
@@ -324,7 +339,7 @@ class _MangaDiscussionScreenState extends ConsumerState<MangaDiscussionScreen> {
                     const SizedBox(height: 8),
                     Text(
                       error.toString(),
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 14,
                         color: AppTheme.textSecondary,
                       ),
@@ -338,7 +353,10 @@ class _MangaDiscussionScreenState extends ConsumerState<MangaDiscussionScreen> {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppTheme.primaryRed,
                         foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 24,
+                          vertical: 12,
+                        ),
                       ),
                     ),
                   ],
@@ -379,7 +397,9 @@ class _MangaDiscussionScreenState extends ConsumerState<MangaDiscussionScreen> {
                           style: const TextStyle(color: AppTheme.textPrimary),
                           decoration: InputDecoration(
                             hintText: 'Share your thoughts...',
-                            hintStyle: TextStyle(color: AppTheme.textSecondary),
+                            hintStyle: const TextStyle(
+                              color: AppTheme.textSecondary,
+                            ),
                             border: InputBorder.none,
                             contentPadding: const EdgeInsets.all(16),
                             suffixIcon: IconButton(
@@ -389,7 +409,9 @@ class _MangaDiscussionScreenState extends ConsumerState<MangaDiscussionScreen> {
                                     ? AppTheme.primaryRed
                                     : AppTheme.textSecondary,
                               ),
-                              onPressed: _isSubmitting || _commentController.text.trim().isEmpty
+                              onPressed:
+                                  _isSubmitting ||
+                                      _commentController.text.trim().isEmpty
                                   ? null
                                   : _submitComment,
                             ),
@@ -398,11 +420,11 @@ class _MangaDiscussionScreenState extends ConsumerState<MangaDiscussionScreen> {
                         ),
                       ),
                       if (_isSubmitting)
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8),
+                        const Padding(
+                          padding: EdgeInsets.only(top: 8),
                           child: Row(
                             children: [
-                              const SizedBox(
+                              SizedBox(
                                 width: 16,
                                 height: 16,
                                 child: CircularProgressIndicator(
@@ -410,7 +432,7 @@ class _MangaDiscussionScreenState extends ConsumerState<MangaDiscussionScreen> {
                                   color: AppTheme.primaryRed,
                                 ),
                               ),
-                              const SizedBox(width: 8),
+                              SizedBox(width: 8),
                               Text(
                                 'Posting...',
                                 style: TextStyle(
@@ -537,10 +559,14 @@ class _MainCommentCard extends StatelessWidget {
                       child: CircleAvatar(
                         radius: 22,
                         backgroundColor: AppTheme.darkBackground,
-                        backgroundImage: avatar != null ? CachedNetworkImageProvider(avatar) : null,
+                        backgroundImage: avatar != null
+                            ? CachedNetworkImageProvider(avatar)
+                            : null,
                         child: avatar == null
                             ? Text(
-                                username.isNotEmpty ? username[0].toUpperCase() : 'A',
+                                username.isNotEmpty
+                                    ? username[0].toUpperCase()
+                                    : 'A',
                                 style: const TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
@@ -569,14 +595,17 @@ class _MainCommentCard extends StatelessWidget {
                                 ),
                               ),
                               Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 10,
+                                  vertical: 5,
+                                ),
                                 decoration: BoxDecoration(
                                   color: AppTheme.darkBackground,
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 child: Text(
                                   _formatDate(createdAt),
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 11,
                                     color: AppTheme.textSecondary,
                                     fontWeight: FontWeight.w500,
@@ -607,7 +636,10 @@ class _MainCommentCard extends StatelessWidget {
                       onTap: onLike,
                       borderRadius: BorderRadius.circular(12),
                       child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 14,
+                          vertical: 8,
+                        ),
                         decoration: BoxDecoration(
                           color: isLiked
                               ? AppTheme.primaryRed.withOpacity(0.2)
@@ -626,7 +658,9 @@ class _MainCommentCard extends StatelessWidget {
                             Icon(
                               isLiked ? Icons.favorite : Icons.favorite_border,
                               size: 18,
-                              color: isLiked ? AppTheme.primaryRed : AppTheme.textSecondary,
+                              color: isLiked
+                                  ? AppTheme.primaryRed
+                                  : AppTheme.textSecondary,
                             ),
                             const SizedBox(width: 6),
                             Text(
@@ -634,7 +668,9 @@ class _MainCommentCard extends StatelessWidget {
                               style: TextStyle(
                                 fontSize: 13,
                                 fontWeight: FontWeight.w600,
-                                color: isLiked ? AppTheme.primaryRed : AppTheme.textSecondary,
+                                color: isLiked
+                                    ? AppTheme.primaryRed
+                                    : AppTheme.textSecondary,
                               ),
                             ),
                           ],
@@ -646,7 +682,10 @@ class _MainCommentCard extends StatelessWidget {
                       onTap: onReply,
                       borderRadius: BorderRadius.circular(12),
                       child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 14,
+                          vertical: 8,
+                        ),
                         decoration: BoxDecoration(
                           color: AppTheme.darkBackground,
                           borderRadius: BorderRadius.circular(12),
@@ -654,7 +693,7 @@ class _MainCommentCard extends StatelessWidget {
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Icon(
+                            const Icon(
                               Icons.reply_outlined,
                               size: 18,
                               color: AppTheme.textSecondary,
@@ -662,7 +701,7 @@ class _MainCommentCard extends StatelessWidget {
                             const SizedBox(width: 6),
                             Text(
                               'Reply${repliesCount > 0 ? ' ($repliesCount)' : ''}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 13,
                                 fontWeight: FontWeight.w500,
                                 color: AppTheme.textSecondary,
@@ -691,12 +730,15 @@ class _MainCommentCard extends StatelessWidget {
                         TextField(
                           controller: replyController,
                           maxLines: 3,
-                          style: const TextStyle(color: AppTheme.textPrimary, fontSize: 14),
-                          decoration: InputDecoration(
+                          style: const TextStyle(
+                            color: AppTheme.textPrimary,
+                            fontSize: 14,
+                          ),
+                          decoration: const InputDecoration(
                             hintText: 'Write a reply...',
                             hintStyle: TextStyle(color: AppTheme.textSecondary),
                             border: InputBorder.none,
-                            contentPadding: const EdgeInsets.all(8),
+                            contentPadding: EdgeInsets.all(8),
                           ),
                         ),
                         const SizedBox(height: 10),
@@ -705,7 +747,7 @@ class _MainCommentCard extends StatelessWidget {
                           children: [
                             TextButton(
                               onPressed: isSubmitting ? null : onCancelReply,
-                              child: Text(
+                              child: const Text(
                                 'Cancel',
                                 style: TextStyle(
                                   color: AppTheme.textSecondary,
@@ -719,7 +761,10 @@ class _MainCommentCard extends StatelessWidget {
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: AppTheme.primaryRed,
                                 foregroundColor: Colors.white,
-                                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 20,
+                                  vertical: 10,
+                                ),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10),
                                 ),
@@ -730,10 +775,18 @@ class _MainCommentCard extends StatelessWidget {
                                       height: 16,
                                       child: CircularProgressIndicator(
                                         strokeWidth: 2,
-                                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                                        valueColor:
+                                            AlwaysStoppedAnimation<Color>(
+                                              Colors.white,
+                                            ),
                                       ),
                                     )
-                                  : const Text('Reply', style: TextStyle(fontWeight: FontWeight.w600)),
+                                  : const Text(
+                                      'Reply',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
                             ),
                           ],
                         ),
@@ -771,7 +824,7 @@ class _MainCommentCard extends StatelessWidget {
                         const SizedBox(width: 8),
                         Text(
                           '$repliesCount ${repliesCount == 1 ? 'Reply' : 'Replies'}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.w600,
                             color: AppTheme.textSecondary,
@@ -785,10 +838,15 @@ class _MainCommentCard extends StatelessWidget {
                     final index = entry.key;
                     final reply = entry.value;
                     return Padding(
-                      padding: EdgeInsets.only(bottom: index < replies.length - 1 ? 14 : 0),
+                      padding: EdgeInsets.only(
+                        bottom: index < replies.length - 1 ? 14 : 0,
+                      ),
                       child: _ReplyCard(
                         reply: reply,
-                        onLike: () => onReplyLike(reply['_id'], reply['isLiked'] ?? false),
+                        onLike: () => onReplyLike(
+                          reply['_id'],
+                          reply['isLiked'] ?? false,
+                        ),
                       ),
                     );
                   }),
@@ -807,10 +865,7 @@ class _ReplyCard extends StatelessWidget {
   final Map<String, dynamic> reply;
   final VoidCallback onLike;
 
-  const _ReplyCard({
-    required this.reply,
-    required this.onLike,
-  });
+  const _ReplyCard({required this.reply, required this.onLike});
 
   String _formatDate(DateTime? date) {
     if (date == null) return '';
@@ -846,9 +901,7 @@ class _ReplyCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppTheme.darkBackground,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: AppTheme.textSecondary.withOpacity(0.08),
-        ),
+        border: Border.all(color: AppTheme.textSecondary.withOpacity(0.08)),
       ),
       child: Stack(
         children: [
@@ -880,11 +933,13 @@ class _ReplyCard extends StatelessWidget {
                 CircleAvatar(
                   radius: 16,
                   backgroundColor: AppTheme.cardBackground,
-                  backgroundImage: avatar != null ? CachedNetworkImageProvider(avatar) : null,
+                  backgroundImage: avatar != null
+                      ? CachedNetworkImageProvider(avatar)
+                      : null,
                   child: avatar == null
                       ? Text(
                           username.isNotEmpty ? username[0].toUpperCase() : 'A',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
                             color: AppTheme.textPrimary,
@@ -911,7 +966,7 @@ class _ReplyCard extends StatelessWidget {
                           ),
                           Text(
                             _formatDate(createdAt),
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 10,
                               color: AppTheme.textSecondary,
                             ),
@@ -932,7 +987,10 @@ class _ReplyCard extends StatelessWidget {
                         onTap: onLike,
                         borderRadius: BorderRadius.circular(8),
                         child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 5,
+                          ),
                           decoration: BoxDecoration(
                             color: isLiked
                                 ? AppTheme.primaryRed.withOpacity(0.15)
@@ -943,9 +1001,13 @@ class _ReplyCard extends StatelessWidget {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Icon(
-                                isLiked ? Icons.favorite : Icons.favorite_border,
+                                isLiked
+                                    ? Icons.favorite
+                                    : Icons.favorite_border,
                                 size: 14,
-                                color: isLiked ? AppTheme.primaryRed : AppTheme.textSecondary,
+                                color: isLiked
+                                    ? AppTheme.primaryRed
+                                    : AppTheme.textSecondary,
                               ),
                               const SizedBox(width: 4),
                               Text(
@@ -953,7 +1015,9 @@ class _ReplyCard extends StatelessWidget {
                                 style: TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w500,
-                                  color: isLiked ? AppTheme.primaryRed : AppTheme.textSecondary,
+                                  color: isLiked
+                                      ? AppTheme.primaryRed
+                                      : AppTheme.textSecondary,
                                 ),
                               ),
                             ],
@@ -973,24 +1037,26 @@ class _ReplyCard extends StatelessWidget {
 }
 
 // Provider for comments
-final commentsProvider = FutureProvider.family<List<Map<String, dynamic>>, String>(
-  (ref, mangaId) async {
-    final apiService = ref.watch(apiServiceProvider);
-    try {
-      final response = await apiService.get(
-        ApiConstants.comments,
-        queryParameters: {'mangaId': mangaId},
-      );
-      final List<dynamic> data = response.data is List ? response.data : [];
-      return data.map((json) => Map<String, dynamic>.from(json)).toList();
-    } catch (e) {
-      Logger.error(
-        'Error fetching comments: ${e.toString()}',
-        e,
-        null,
-        'CommentsProvider',
-      );
-      return [];
-    }
-  },
-);
+final commentsProvider =
+    FutureProvider.family<List<Map<String, dynamic>>, String>((
+      ref,
+      mangaId,
+    ) async {
+      final apiService = ref.watch(apiServiceProvider);
+      try {
+        final response = await apiService.get(
+          ApiConstants.comments,
+          queryParameters: {'mangaId': mangaId},
+        );
+        final List<dynamic> data = response.data is List ? response.data : [];
+        return data.map((json) => Map<String, dynamic>.from(json)).toList();
+      } catch (e) {
+        Logger.error(
+          'Error fetching comments: ${e.toString()}',
+          e,
+          null,
+          'CommentsProvider',
+        );
+        return [];
+      }
+    });

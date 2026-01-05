@@ -117,7 +117,7 @@ class _ReadingListsScreenState extends ConsumerState<ReadingListsScreen> {
                                       ),
                                       if (list['isPublic'] == true) ...[
                                         const SizedBox(width: 8),
-                                        Icon(
+                                        const Icon(
                                           Icons.public,
                                           size: 16,
                                           color: AppTheme.primaryRed,

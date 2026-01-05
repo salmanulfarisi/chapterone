@@ -32,7 +32,9 @@ class _AdminContentScreenState extends ConsumerState<AdminContentScreen> {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Delete Manga'),
-        content: const Text('Are you sure you want to delete this manga? This action cannot be undone.'),
+        content: const Text(
+          'Are you sure you want to delete this manga? This action cannot be undone.',
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
@@ -56,7 +58,10 @@ class _AdminContentScreenState extends ConsumerState<AdminContentScreen> {
         CustomSnackbar.success(context, 'Manga deleted successfully');
         ref.invalidate(adminMangaListProvider);
       } catch (e) {
-        CustomSnackbar.error(context, 'Failed to delete manga: ${e.toString()}');
+        CustomSnackbar.error(
+          context,
+          'Failed to delete manga: ${e.toString()}',
+        );
       }
     }
   }
@@ -67,9 +72,7 @@ class _AdminContentScreenState extends ConsumerState<AdminContentScreen> {
     // Use admin manga provider to see all manga including adult content
     final mangaList = ref.watch(
       adminMangaListProvider(
-        AdminMangaQueryParams(
-          search: query.isNotEmpty ? query : null,
-        ),
+        AdminMangaQueryParams(search: query.isNotEmpty ? query : null),
       ),
     );
 
@@ -113,11 +116,13 @@ class _AdminContentScreenState extends ConsumerState<AdminContentScreen> {
           }
           return RefreshIndicator(
             onRefresh: () async {
-              ref.invalidate(adminMangaListProvider(
-                AdminMangaQueryParams(
-                  search: query.isNotEmpty ? query : null,
+              ref.invalidate(
+                adminMangaListProvider(
+                  AdminMangaQueryParams(
+                    search: query.isNotEmpty ? query : null,
+                  ),
                 ),
-              ));
+              );
             },
             child: GridView.builder(
               padding: const EdgeInsets.all(16),
@@ -128,106 +133,124 @@ class _AdminContentScreenState extends ConsumerState<AdminContentScreen> {
                 mainAxisSpacing: 12,
               ),
               itemCount: manga.length,
-            itemBuilder: (context, index) {
-              final item = manga[index];
-              return Stack(
-                children: [
-                  MangaCard(
-                    title: item.title,
-                    cover: item.cover,
-                    subtitle: item.status,
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => AddEditMangaScreen(
-                            manga: item.toJson(),
-                          ),
-                        ),
-                      ).then((_) {
-                        ref.invalidate(adminMangaListProvider(
-                          AdminMangaQueryParams(
-                            search: query.isNotEmpty ? query : null,
-                          ),
-                        ));
-                      });
-                    },
-                  ),
-                  Positioned(
-                    top: 8,
-                    right: 8,
-                    child: PopupMenuButton(
-                      icon: Container(
-                        padding: const EdgeInsets.all(4),
-                        decoration: BoxDecoration(
-                          color: AppTheme.darkBackground.withOpacity(0.8),
-                          shape: BoxShape.circle,
-                        ),
-                        child: const Icon(Icons.more_vert, size: 16),
-                      ),
-                      itemBuilder: (context) => [
-                        PopupMenuItem(
-                          child: const Row(
-                            children: [
-                              Icon(Icons.edit, size: 18),
-                              SizedBox(width: 8),
-                              Text('Edit Manga'),
-                            ],
-                          ),
-                          onTap: () {
-                            Future.delayed(Duration.zero, () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => AddEditMangaScreen(
-                                    manga: item.toJson(),
-                                  ),
-                                ),
-                              ).then((_) {
-                                ref.invalidate(adminMangaListProvider(
+              itemBuilder: (context, index) {
+                final item = manga[index];
+                return Stack(
+                  children: [
+                    MangaCard(
+                      title: item.title,
+                      cover: item.cover,
+                      subtitle: item.status,
+                      onTap: () {
+                        Navigator.of(context)
+                            .push(
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    AddEditMangaScreen(manga: item.toJson()),
+                              ),
+                            )
+                            .then((_) {
+                              ref.invalidate(
+                                adminMangaListProvider(
                                   AdminMangaQueryParams(
                                     search: query.isNotEmpty ? query : null,
-                                  ),
-                                ));
-                              });
-                            });
-                          },
-                        ),
-                        PopupMenuItem(
-                          child: const Row(
-                            children: [
-                              Icon(Icons.menu_book, size: 18),
-                              SizedBox(width: 8),
-                              Text('Manage Chapters'),
-                            ],
-                          ),
-                          onTap: () {
-                            Future.delayed(Duration.zero, () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => ChapterManagementScreen(
-                                    mangaId: item.id,
-                                    mangaTitle: item.title,
                                   ),
                                 ),
                               );
                             });
-                          },
-                        ),
-                        PopupMenuItem(
-                          child: const Row(
-                            children: [
-                              Icon(Icons.delete, size: 18, color: AppTheme.primaryRed),
-                              SizedBox(width: 8),
-                              Text('Delete', style: TextStyle(color: AppTheme.primaryRed)),
-                            ],
-                          ),
-                          onTap: () => _deleteManga(item.id),
-                        ),
-                      ],
+                      },
                     ),
-                  ),
-                ],
-              );
-            },
+                    Positioned(
+                      top: 8,
+                      right: 8,
+                      child: PopupMenuButton(
+                        icon: Container(
+                          padding: const EdgeInsets.all(4),
+                          decoration: BoxDecoration(
+                            color: AppTheme.darkBackground.withOpacity(0.8),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(Icons.more_vert, size: 16),
+                        ),
+                        itemBuilder: (context) => [
+                          PopupMenuItem(
+                            child: const Row(
+                              children: [
+                                Icon(Icons.edit, size: 18),
+                                SizedBox(width: 8),
+                                Text('Edit Manga'),
+                              ],
+                            ),
+                            onTap: () {
+                              Future.delayed(Duration.zero, () {
+                                Navigator.of(context)
+                                    .push(
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            AddEditMangaScreen(
+                                              manga: item.toJson(),
+                                            ),
+                                      ),
+                                    )
+                                    .then((_) {
+                                      ref.invalidate(
+                                        adminMangaListProvider(
+                                          AdminMangaQueryParams(
+                                            search: query.isNotEmpty
+                                                ? query
+                                                : null,
+                                          ),
+                                        ),
+                                      );
+                                    });
+                              });
+                            },
+                          ),
+                          PopupMenuItem(
+                            child: const Row(
+                              children: [
+                                Icon(Icons.menu_book, size: 18),
+                                SizedBox(width: 8),
+                                Text('Manage Chapters'),
+                              ],
+                            ),
+                            onTap: () {
+                              Future.delayed(Duration.zero, () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        ChapterManagementScreen(
+                                          mangaId: item.id,
+                                          mangaTitle: item.title,
+                                        ),
+                                  ),
+                                );
+                              });
+                            },
+                          ),
+                          PopupMenuItem(
+                            child: const Row(
+                              children: [
+                                Icon(
+                                  Icons.delete,
+                                  size: 18,
+                                  color: AppTheme.primaryRed,
+                                ),
+                                SizedBox(width: 8),
+                                Text(
+                                  'Delete',
+                                  style: TextStyle(color: AppTheme.primaryRed),
+                                ),
+                              ],
+                            ),
+                            onTap: () => _deleteManga(item.id),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                );
+              },
             ),
           );
         },
@@ -252,16 +275,16 @@ class _AdminContentScreenState extends ConsumerState<AdminContentScreen> {
                 color: AppTheme.textSecondary,
               ),
               const SizedBox(height: 16),
-              Text(
+              const Text(
                 'Error Loading Manga',
                 style: TextStyle(color: AppTheme.textSecondary),
               ),
               const SizedBox(height: 8),
               Text(
-                error.toString().contains('timeout') 
+                error.toString().contains('timeout')
                     ? 'Connection timeout. Please try again.'
                     : error.toString(),
-                style: TextStyle(
+                style: const TextStyle(
                   color: AppTheme.textSecondary,
                   fontSize: 12,
                 ),
@@ -270,13 +293,15 @@ class _AdminContentScreenState extends ConsumerState<AdminContentScreen> {
               const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
-                  ref.invalidate(adminMangaListProvider(
-                    AdminMangaQueryParams(
-                      search: _searchController.text.isNotEmpty 
-                          ? _searchController.text 
-                          : null,
+                  ref.invalidate(
+                    adminMangaListProvider(
+                      AdminMangaQueryParams(
+                        search: _searchController.text.isNotEmpty
+                            ? _searchController.text
+                            : null,
+                      ),
                     ),
-                  ));
+                  );
                 },
                 child: const Text('Retry'),
               ),
@@ -286,15 +311,17 @@ class _AdminContentScreenState extends ConsumerState<AdminContentScreen> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => const AddEditMangaScreen(),
-            ),
-          ).then((_) {
-            ref.invalidate(adminMangaListProvider(
-              AdminMangaQueryParams(search: null),
-            ));
-          });
+          Navigator.of(context)
+              .push(
+                MaterialPageRoute(
+                  builder: (context) => const AddEditMangaScreen(),
+                ),
+              )
+              .then((_) {
+                ref.invalidate(
+                  adminMangaListProvider(AdminMangaQueryParams(search: null)),
+                );
+              });
         },
         icon: const Icon(Icons.add),
         label: const Text('Add Manga'),
@@ -302,4 +329,3 @@ class _AdminContentScreenState extends ConsumerState<AdminContentScreen> {
     );
   }
 }
-

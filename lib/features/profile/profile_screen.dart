@@ -34,7 +34,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.invalidate(userStatsProvider);
     });
-    
+
     // Auto-refresh every 30 seconds for instant updates
     Future.delayed(const Duration(seconds: 30), () {
       if (mounted) {
@@ -180,16 +180,19 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                                             width: 90,
                                             height: 90,
                                             fit: BoxFit.cover,
-                                            placeholder: (context, url) => Container(
-                                              width: 90,
-                                              height: 90,
-                                              color: AppTheme.cardBackground,
-                                              child: const Center(
-                                                child: CircularProgressIndicator(
-                                                  strokeWidth: 2,
+                                            placeholder: (context, url) =>
+                                                Container(
+                                                  width: 90,
+                                                  height: 90,
+                                                  color:
+                                                      AppTheme.cardBackground,
+                                                  child: const Center(
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                          strokeWidth: 2,
+                                                        ),
+                                                  ),
                                                 ),
-                                              ),
-                                            ),
                                             errorWidget: (_, __, ___) => Text(
                                               user.username?[0].toUpperCase() ??
                                                   user.email[0].toUpperCase(),
@@ -277,7 +280,9 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                                         borderRadius: BorderRadius.circular(12),
                                         boxShadow: [
                                           BoxShadow(
-                                            color: Colors.orange.withOpacity(0.3),
+                                            color: Colors.orange.withOpacity(
+                                              0.3,
+                                            ),
                                             blurRadius: 4,
                                             offset: const Offset(0, 2),
                                           ),
@@ -392,7 +397,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Text(
+                                            const Text(
                                               'Reading Streak',
                                               style: TextStyle(
                                                 fontSize: 12,
@@ -438,20 +443,26 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                                   ),
                                 ),
                                 const SizedBox(height: 12),
-                                
+
                                 // Achievements Card
                                 Consumer(
                                   builder: (context, ref, child) {
-                                    final progress = ref.watch(achievementProgressProvider);
+                                    final progress = ref.watch(
+                                      achievementProgressProvider,
+                                    );
                                     return GestureDetector(
-                                      onTap: () => context.push('/achievements'),
+                                      onTap: () =>
+                                          context.push('/achievements'),
                                       child: Container(
                                         padding: const EdgeInsets.all(16),
                                         decoration: BoxDecoration(
                                           color: AppTheme.cardBackground,
-                                          borderRadius: BorderRadius.circular(12),
+                                          borderRadius: BorderRadius.circular(
+                                            12,
+                                          ),
                                           border: Border.all(
-                                            color: AppTheme.primaryRed.withOpacity(0.3),
+                                            color: AppTheme.primaryRed
+                                                .withOpacity(0.3),
                                             width: 1,
                                           ),
                                         ),
@@ -460,8 +471,10 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                                             Container(
                                               padding: const EdgeInsets.all(12),
                                               decoration: BoxDecoration(
-                                                color: AppTheme.primaryRed.withOpacity(0.1),
-                                                borderRadius: BorderRadius.circular(12),
+                                                color: AppTheme.primaryRed
+                                                    .withOpacity(0.1),
+                                                borderRadius:
+                                                    BorderRadius.circular(12),
                                               ),
                                               child: const Icon(
                                                 Icons.emoji_events,
@@ -472,13 +485,15 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                                             const SizedBox(width: 16),
                                             Expanded(
                                               child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
                                                 children: [
-                                                  Text(
+                                                  const Text(
                                                     'Achievements',
                                                     style: TextStyle(
                                                       fontSize: 12,
-                                                      color: AppTheme.textSecondary,
+                                                      color: AppTheme
+                                                          .textSecondary,
                                                     ),
                                                   ),
                                                   const SizedBox(height: 4),
@@ -488,21 +503,34 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                                                         '${progress['unlocked']}/${progress['total']}',
                                                         style: const TextStyle(
                                                           fontSize: 24,
-                                                          fontWeight: FontWeight.bold,
-                                                          color: AppTheme.primaryRed,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: AppTheme
+                                                              .primaryRed,
                                                         ),
                                                       ),
                                                       const SizedBox(width: 8),
                                                       Expanded(
                                                         child: ClipRRect(
-                                                          borderRadius: BorderRadius.circular(4),
+                                                          borderRadius:
+                                                              BorderRadius.circular(
+                                                                4,
+                                                              ),
                                                           child: LinearProgressIndicator(
-                                                            value: progress['progress'] as double,
+                                                            value:
+                                                                progress['progress']
+                                                                    as double,
                                                             minHeight: 6,
-                                                            backgroundColor: AppTheme.darkBackground,
-                                                            valueColor: AlwaysStoppedAnimation<Color>(
-                                                              AppTheme.primaryRed,
-                                                            ),
+                                                            backgroundColor:
+                                                                AppTheme
+                                                                    .darkBackground,
+                                                            valueColor:
+                                                                const AlwaysStoppedAnimation<
+                                                                  Color
+                                                                >(
+                                                                  AppTheme
+                                                                      .primaryRed,
+                                                                ),
                                                           ),
                                                         ),
                                                       ),
@@ -597,20 +625,27 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                                                       BorderRadius.circular(8),
                                                   child: manga['cover'] != null
                                                       ? CachedNetworkImage(
-                                                          imageUrl: manga['cover'],
+                                                          imageUrl:
+                                                              manga['cover'],
                                                           width: 90,
                                                           height: 110,
                                                           fit: BoxFit.cover,
-                                                          placeholder: (context, url) => Container(
-                                                            width: 90,
-                                                            height: 110,
-                                                            color: AppTheme.cardBackground,
-                                                            child: const Center(
-                                                              child: CircularProgressIndicator(
-                                                                strokeWidth: 2,
+                                                          placeholder:
+                                                              (
+                                                                context,
+                                                                url,
+                                                              ) => Container(
+                                                                width: 90,
+                                                                height: 110,
+                                                                color: AppTheme
+                                                                    .cardBackground,
+                                                                child: const Center(
+                                                                  child: CircularProgressIndicator(
+                                                                    strokeWidth:
+                                                                        2,
+                                                                  ),
+                                                                ),
                                                               ),
-                                                            ),
-                                                          ),
                                                           errorWidget:
                                                               (
                                                                 _,
@@ -718,7 +753,9 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                                 _buildMenuItem(
                                   icon: Icons.notification_important_outlined,
                                   title: 'Notification Preferences',
-                                  onTap: () => context.push('/notifications/preferences'),
+                                  onTap: () => context.push(
+                                    '/notifications/preferences',
+                                  ),
                                 ),
                                 _buildMenuItem(
                                   icon: Icons.settings,

@@ -15,21 +15,21 @@ class BookmarksScreen extends ConsumerWidget {
     final bookmarksAsync = ref.watch(bookmarksProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Bookmarks'),
-      ),
+      appBar: AppBar(title: const Text('Bookmarks')),
       body: Column(
         children: [
           // Premium Unlock Banner
           Consumer(
             builder: (context, ref, child) {
-              final adsWatched = StorageService.getSetting<int>(
-                'premium_reader_ads_watched',
-                defaultValue: 0,
-              ) ?? 0;
-              final isUnlocked = StorageService.getSetting<String>(
-                'premium_unlocked_until',
-              ) != null;
+              final adsWatched =
+                  StorageService.getSetting<int>(
+                    'premium_reader_ads_watched',
+                    defaultValue: 0,
+                  ) ??
+                  0;
+              final isUnlocked =
+                  StorageService.getSetting<String>('premium_unlocked_until') !=
+                  null;
 
               // Check if premium is still valid
               bool isPremiumActive = false;
@@ -42,7 +42,10 @@ class BookmarksScreen extends ConsumerWidget {
                     final expiryTime = DateTime.parse(expiryStr);
                     isPremiumActive = expiryTime.isAfter(DateTime.now());
                     if (!isPremiumActive) {
-                      StorageService.saveSetting('premium_unlocked_until', null);
+                      StorageService.saveSetting(
+                        'premium_unlocked_until',
+                        null,
+                      );
                     }
                   } catch (e) {
                     StorageService.saveSetting('premium_unlocked_until', null);
@@ -75,15 +78,15 @@ class BookmarksScreen extends ConsumerWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
+                    const Row(
                       children: [
                         Icon(
                           Icons.workspace_premium,
                           color: AppTheme.primaryRed,
                           size: 24,
                         ),
-                        const SizedBox(width: 8),
-                        const Expanded(
+                        SizedBox(width: 8),
+                        Expanded(
                           child: Text(
                             'Unlock Premium Reader',
                             style: TextStyle(
@@ -95,7 +98,7 @@ class BookmarksScreen extends ConsumerWidget {
                       ],
                     ),
                     const SizedBox(height: 8),
-                    Text(
+                    const Text(
                       'Watch 6 ads to unlock premium features',
                       style: TextStyle(
                         fontSize: 12,
@@ -108,7 +111,7 @@ class BookmarksScreen extends ConsumerWidget {
                       children: [
                         Text(
                           'Progress: $adsWatched / 6 ads',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 12,
                             color: AppTheme.textSecondary,
                             fontWeight: FontWeight.w500,
@@ -116,7 +119,7 @@ class BookmarksScreen extends ConsumerWidget {
                         ),
                         Text(
                           '${((adsWatched / 6) * 100).toStringAsFixed(0)}%',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 12,
                             color: AppTheme.primaryRed,
                             fontWeight: FontWeight.w600,
@@ -131,7 +134,7 @@ class BookmarksScreen extends ConsumerWidget {
                         value: adsWatched / 6,
                         minHeight: 6,
                         backgroundColor: AppTheme.textTertiary.withOpacity(0.2),
-                        valueColor: AlwaysStoppedAnimation<Color>(
+                        valueColor: const AlwaysStoppedAnimation<Color>(
                           AppTheme.primaryRed,
                         ),
                       ),
@@ -180,44 +183,46 @@ class BookmarksScreen extends ConsumerWidget {
           // Bookmarks List
           Expanded(
             child: bookmarksAsync.when(
-        data: (bookmarks) {
-          if (bookmarks.isEmpty) {
-            return const Center(
-              child: Text(
-                'No bookmarks yet',
-                style: TextStyle(color: AppTheme.textSecondary),
+              data: (bookmarks) {
+                if (bookmarks.isEmpty) {
+                  return const Center(
+                    child: Text(
+                      'No bookmarks yet',
+                      style: TextStyle(color: AppTheme.textSecondary),
+                    ),
+                  );
+                }
+                return GridView.builder(
+                  padding: const EdgeInsets.all(16),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 0.6,
+                    crossAxisSpacing: 12,
+                    mainAxisSpacing: 12,
+                  ),
+                  itemCount: bookmarks.length,
+                  itemBuilder: (context, index) {
+                    final manga = bookmarks[index];
+                    return MangaCard(
+                      title: manga.title,
+                      cover: manga.cover,
+                      subtitle: manga.genres.isNotEmpty
+                          ? manga.genres.first
+                          : null,
+                      onTap: () {
+                        context.push('/manga/${manga.id}');
+                      },
+                    );
+                  },
+                );
+              },
+              loading: () => const Center(child: CircularProgressIndicator()),
+              error: (error, stack) => const Center(
+                child: Text(
+                  'Error loading bookmarks',
+                  style: TextStyle(color: AppTheme.textSecondary),
+                ),
               ),
-            );
-          }
-          return GridView.builder(
-            padding: const EdgeInsets.all(16),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: 0.6,
-              crossAxisSpacing: 12,
-              mainAxisSpacing: 12,
-            ),
-            itemCount: bookmarks.length,
-            itemBuilder: (context, index) {
-              final manga = bookmarks[index];
-              return MangaCard(
-                title: manga.title,
-                cover: manga.cover,
-                subtitle: manga.genres.isNotEmpty ? manga.genres.first : null,
-                onTap: () {
-                  context.push('/manga/${manga.id}');
-                },
-              );
-            },
-          );
-        },
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stack) => const Center(
-          child: Text(
-            'Error loading bookmarks',
-            style: TextStyle(color: AppTheme.textSecondary),
-          ),
-        ),
             ),
           ),
         ],
@@ -225,4 +230,3 @@ class BookmarksScreen extends ConsumerWidget {
     );
   }
 }
-

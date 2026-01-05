@@ -30,14 +30,16 @@ class FeedbackQueryParams {
           limit == other.limit;
 
   @override
-  int get hashCode => type.hashCode ^ status.hashCode ^ page.hashCode ^ limit.hashCode;
+  int get hashCode =>
+      type.hashCode ^ status.hashCode ^ page.hashCode ^ limit.hashCode;
 }
 
 class AdminFeedbackScreen extends ConsumerStatefulWidget {
   const AdminFeedbackScreen({super.key});
 
   @override
-  ConsumerState<AdminFeedbackScreen> createState() => _AdminFeedbackScreenState();
+  ConsumerState<AdminFeedbackScreen> createState() =>
+      _AdminFeedbackScreenState();
 }
 
 class _AdminFeedbackScreenState extends ConsumerState<AdminFeedbackScreen> {
@@ -57,14 +59,10 @@ class _AdminFeedbackScreenState extends ConsumerState<AdminFeedbackScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final feedbackAsync = ref.watch(
-      adminFeedbackProvider(_providerParams),
-    );
+    final feedbackAsync = ref.watch(adminFeedbackProvider(_providerParams));
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Feedback & Requests'),
-      ),
+      appBar: AppBar(title: const Text('Feedback & Requests')),
       body: Column(
         children: [
           // Filters
@@ -79,9 +77,18 @@ class _AdminFeedbackScreenState extends ConsumerState<AdminFeedbackScreen> {
                     isExpanded: true,
                     items: const [
                       DropdownMenuItem(value: 'all', child: Text('All Types')),
-                      DropdownMenuItem(value: 'feedback', child: Text('Feedback')),
-                      DropdownMenuItem(value: 'request', child: Text('Request')),
-                      DropdownMenuItem(value: 'contact', child: Text('Contact')),
+                      DropdownMenuItem(
+                        value: 'feedback',
+                        child: Text('Feedback'),
+                      ),
+                      DropdownMenuItem(
+                        value: 'request',
+                        child: Text('Request'),
+                      ),
+                      DropdownMenuItem(
+                        value: 'contact',
+                        child: Text('Contact'),
+                      ),
                     ],
                     onChanged: (value) {
                       if (value != null) {
@@ -100,10 +107,22 @@ class _AdminFeedbackScreenState extends ConsumerState<AdminFeedbackScreen> {
                     isExpanded: true,
                     items: const [
                       DropdownMenuItem(value: 'all', child: Text('All Status')),
-                      DropdownMenuItem(value: 'pending', child: Text('Pending')),
-                      DropdownMenuItem(value: 'reviewed', child: Text('Reviewed')),
-                      DropdownMenuItem(value: 'resolved', child: Text('Resolved')),
-                      DropdownMenuItem(value: 'rejected', child: Text('Rejected')),
+                      DropdownMenuItem(
+                        value: 'pending',
+                        child: Text('Pending'),
+                      ),
+                      DropdownMenuItem(
+                        value: 'reviewed',
+                        child: Text('Reviewed'),
+                      ),
+                      DropdownMenuItem(
+                        value: 'resolved',
+                        child: Text('Resolved'),
+                      ),
+                      DropdownMenuItem(
+                        value: 'rejected',
+                        child: Text('Rejected'),
+                      ),
                     ],
                     onChanged: (value) {
                       if (value != null) {
@@ -126,9 +145,7 @@ class _AdminFeedbackScreenState extends ConsumerState<AdminFeedbackScreen> {
                 final totalPages = data['totalPages'] as int;
 
                 if (feedbacks.isEmpty) {
-                  return const Center(
-                    child: Text('No feedback found'),
-                  );
+                  return const Center(child: Text('No feedback found'));
                 }
 
                 return Column(
@@ -136,7 +153,9 @@ class _AdminFeedbackScreenState extends ConsumerState<AdminFeedbackScreen> {
                     Expanded(
                       child: RefreshIndicator(
                         onRefresh: () async {
-                          ref.invalidate(adminFeedbackProvider(_providerParams));
+                          ref.invalidate(
+                            adminFeedbackProvider(_providerParams),
+                          );
                         },
                         child: ListView.builder(
                           padding: const EdgeInsets.all(16),
@@ -146,7 +165,9 @@ class _AdminFeedbackScreenState extends ConsumerState<AdminFeedbackScreen> {
                             return _FeedbackCard(
                               feedback: feedback,
                               onStatusUpdate: () {
-                                ref.invalidate(adminFeedbackProvider(_providerParams));
+                                ref.invalidate(
+                                  adminFeedbackProvider(_providerParams),
+                                );
                               },
                             );
                           },
@@ -183,12 +204,12 @@ class _AdminFeedbackScreenState extends ConsumerState<AdminFeedbackScreen> {
                   ],
                 );
               },
-              loading: () => Center(
+              loading: () => const Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const CircularProgressIndicator(color: AppTheme.primaryRed),
-                    const SizedBox(height: 16),
+                    CircularProgressIndicator(color: AppTheme.primaryRed),
+                    SizedBox(height: 16),
                     Text(
                       'Loading feedback...',
                       style: TextStyle(color: AppTheme.textSecondary),
@@ -207,13 +228,13 @@ class _AdminFeedbackScreenState extends ConsumerState<AdminFeedbackScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.error_outline,
                         size: 64,
                         color: AppTheme.textSecondary,
                       ),
                       const SizedBox(height: 16),
-                      Text(
+                      const Text(
                         'Error loading feedback',
                         style: TextStyle(
                           fontSize: 18,
@@ -226,7 +247,7 @@ class _AdminFeedbackScreenState extends ConsumerState<AdminFeedbackScreen> {
                         padding: const EdgeInsets.symmetric(horizontal: 32),
                         child: Text(
                           error.toString(),
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 12,
                             color: AppTheme.textSecondary,
                           ),
@@ -236,7 +257,9 @@ class _AdminFeedbackScreenState extends ConsumerState<AdminFeedbackScreen> {
                       const SizedBox(height: 24),
                       ElevatedButton.icon(
                         onPressed: () {
-                          ref.invalidate(adminFeedbackProvider(_providerParams));
+                          ref.invalidate(
+                            adminFeedbackProvider(_providerParams),
+                          );
                         },
                         icon: const Icon(Icons.refresh),
                         label: const Text('Retry'),
@@ -261,12 +284,15 @@ class _FeedbackCard extends ConsumerWidget {
   final Map<String, dynamic> feedback;
   final VoidCallback onStatusUpdate;
 
-  const _FeedbackCard({
-    required this.feedback,
-    required this.onStatusUpdate,
-  });
+  const _FeedbackCard({required this.feedback, required this.onStatusUpdate});
 
-  void _showStatusUpdateDialog(BuildContext context, WidgetRef ref, String feedbackId, String newStatus, VoidCallback onUpdate) {
+  void _showStatusUpdateDialog(
+    BuildContext context,
+    WidgetRef ref,
+    String feedbackId,
+    String newStatus,
+    VoidCallback onUpdate,
+  ) {
     showDialog(
       context: context,
       builder: (dialogContext) => AlertDialog(
@@ -335,8 +361,8 @@ class _FeedbackCard extends ConsumerWidget {
     final status = feedback['status'] ?? 'pending';
     final subject = feedback['subject'] ?? '';
     final message = feedback['message'] ?? '';
-                final mangaTitle = feedback['mangaTitle'];
-                final adminNotes = feedback['adminNotes'];
+    final mangaTitle = feedback['mangaTitle'];
+    final adminNotes = feedback['adminNotes'];
     final createdAt = feedback['createdAt'] != null
         ? DateTime.parse(feedback['createdAt'].toString())
         : null;
@@ -346,7 +372,11 @@ class _FeedbackCard extends ConsumerWidget {
       color: AppTheme.cardBackground,
       child: ExpansionTile(
         leading: Icon(
-          type == 'request' ? Icons.book : type == 'contact' ? Icons.mail : Icons.feedback,
+          type == 'request'
+              ? Icons.book
+              : type == 'contact'
+              ? Icons.mail
+              : Icons.feedback,
           color: AppTheme.primaryRed,
         ),
         title: Text(
@@ -390,17 +420,17 @@ class _FeedbackCard extends ConsumerWidget {
                   ),
                   const SizedBox(height: 8),
                 ],
-                Text(
+                const Text(
                   'Message:',
-                  style: const TextStyle(fontWeight: FontWeight.w600),
+                  style: TextStyle(fontWeight: FontWeight.w600),
                 ),
                 const SizedBox(height: 4),
                 Text(message),
                 if (adminNotes != null && adminNotes.isNotEmpty) ...[
                   const SizedBox(height: 16),
-                  Text(
+                  const Text(
                     'Admin Notes:',
-                    style: const TextStyle(fontWeight: FontWeight.w600),
+                    style: TextStyle(fontWeight: FontWeight.w600),
                   ),
                   const SizedBox(height: 4),
                   Text(adminNotes),
@@ -412,14 +442,32 @@ class _FeedbackCard extends ConsumerWidget {
                     DropdownButton<String>(
                       value: status,
                       items: const [
-                        DropdownMenuItem(value: 'pending', child: Text('Pending')),
-                        DropdownMenuItem(value: 'reviewed', child: Text('Reviewed')),
-                        DropdownMenuItem(value: 'resolved', child: Text('Resolved')),
-                        DropdownMenuItem(value: 'rejected', child: Text('Rejected')),
+                        DropdownMenuItem(
+                          value: 'pending',
+                          child: Text('Pending'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'reviewed',
+                          child: Text('Reviewed'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'resolved',
+                          child: Text('Resolved'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'rejected',
+                          child: Text('Rejected'),
+                        ),
                       ],
                       onChanged: (newStatus) async {
                         if (newStatus != null && newStatus != status) {
-                          _showStatusUpdateDialog(context, ref, feedback['_id'], newStatus, onStatusUpdate);
+                          _showStatusUpdateDialog(
+                            context,
+                            ref,
+                            feedback['_id'],
+                            newStatus,
+                            onStatusUpdate,
+                          );
                         }
                       },
                     ),
@@ -435,65 +483,68 @@ class _FeedbackCard extends ConsumerWidget {
 }
 
 // Provider for admin feedback
-final adminFeedbackProvider = FutureProvider.family<Map<String, dynamic>, FeedbackQueryParams>(
-  (ref, params) async {
-    final apiService = ref.watch(apiServiceProvider);
-    try {
-      final queryParams = <String, dynamic>{
-        'page': params.page,
-        'limit': params.limit,
-      };
-      if (params.type != null) {
-        queryParams['type'] = params.type;
-      }
-      if (params.status != null) {
-        queryParams['status'] = params.status;
-      }
+final adminFeedbackProvider =
+    FutureProvider.family<Map<String, dynamic>, FeedbackQueryParams>((
+      ref,
+      params,
+    ) async {
+      final apiService = ref.watch(apiServiceProvider);
+      try {
+        final queryParams = <String, dynamic>{
+          'page': params.page,
+          'limit': params.limit,
+        };
+        if (params.type != null) {
+          queryParams['type'] = params.type;
+        }
+        if (params.status != null) {
+          queryParams['status'] = params.status;
+        }
 
-      final response = await apiService.get(
-        ApiConstants.adminFeedback,
-        queryParameters: queryParams,
-      );
-      
-      final data = response.data;
-      if (data is Map) {
-        final result = Map<String, dynamic>.from(data);
-        // Ensure feedbacks is always a List
-        if (result['feedbacks'] == null) {
-          result['feedbacks'] = [];
-        }
-        if (result['total'] == null) {
-          result['total'] = 0;
-        }
-        if (result['totalPages'] == null) {
-          result['totalPages'] = 0;
-        }
-        return result;
-      }
-      
-      // Fallback structure
-      return {
-        'feedbacks': data is List ? data : [],
-        'total': data is List ? data.length : 0,
-        'page': params.page,
-        'limit': params.limit,
-        'totalPages': data is List ? ((data.length / params.limit).ceil()) : 0,
-      };
-    } catch (e) {
-      Logger.error(
-        'Error fetching admin feedback: ${e.toString()}',
-        e,
-        null,
-        'AdminFeedbackProvider',
-      );
-      return {
-        'feedbacks': [],
-        'total': 0,
-        'page': params.page,
-        'limit': params.limit,
-        'totalPages': 0,
-      };
-    }
-  },
-);
+        final response = await apiService.get(
+          ApiConstants.adminFeedback,
+          queryParameters: queryParams,
+        );
 
+        final data = response.data;
+        if (data is Map) {
+          final result = Map<String, dynamic>.from(data);
+          // Ensure feedbacks is always a List
+          if (result['feedbacks'] == null) {
+            result['feedbacks'] = [];
+          }
+          if (result['total'] == null) {
+            result['total'] = 0;
+          }
+          if (result['totalPages'] == null) {
+            result['totalPages'] = 0;
+          }
+          return result;
+        }
+
+        // Fallback structure
+        return {
+          'feedbacks': data is List ? data : [],
+          'total': data is List ? data.length : 0,
+          'page': params.page,
+          'limit': params.limit,
+          'totalPages': data is List
+              ? ((data.length / params.limit).ceil())
+              : 0,
+        };
+      } catch (e) {
+        Logger.error(
+          'Error fetching admin feedback: ${e.toString()}',
+          e,
+          null,
+          'AdminFeedbackProvider',
+        );
+        return {
+          'feedbacks': [],
+          'total': 0,
+          'page': params.page,
+          'limit': params.limit,
+          'totalPages': 0,
+        };
+      }
+    });

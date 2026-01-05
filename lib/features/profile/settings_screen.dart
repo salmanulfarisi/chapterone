@@ -172,7 +172,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 width: 1,
               ),
             ),
-            child: Column(
+            child: const Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
@@ -182,8 +182,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                       color: AppTheme.primaryRed,
                       size: 28,
                     ),
-                    const SizedBox(width: 12),
-                    const Expanded(
+                    SizedBox(width: 12),
+                    Expanded(
                       child: Text(
                         'Welcome to ChapterOne!',
                         style: TextStyle(
@@ -195,7 +195,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 12),
+                SizedBox(height: 12),
                 Text(
                   'Let\'s set up your reading preferences to get the best experience.',
                   style: TextStyle(fontSize: 14, color: AppTheme.textSecondary),
@@ -420,7 +420,10 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                                 },
                               ),
                             isEnabled
-                                ? Icon(Icons.check_circle, color: Colors.green)
+                                ? const Icon(
+                                    Icons.check_circle,
+                                    color: Colors.green,
+                                  )
                                 : IconButton(
                                     icon: const Icon(Icons.settings),
                                     onPressed: () async {
@@ -456,7 +459,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              const Text(
                                 'Enable notifications to get updates about:',
                                 style: TextStyle(
                                   fontSize: 14,
@@ -634,7 +637,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                       isAgeVerified
                           ? 'You are verified to access adult content'
                           : 'Verify your age to access adult content',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 12,
                         color: AppTheme.textSecondary,
                       ),
@@ -708,10 +711,10 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           ),
           child: Column(
             children: [
-              ListTile(
-                leading: const Icon(Icons.info_outline),
-                title: const Text('App Version'),
-                trailing: const Text(
+              const ListTile(
+                leading: Icon(Icons.info_outline),
+                title: Text('App Version'),
+                trailing: Text(
                   '1.0.0',
                   style: TextStyle(color: AppTheme.textSecondary),
                 ),
@@ -755,11 +758,11 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
+                    const Row(
                       children: [
                         Icon(Icons.stars, color: Colors.amber, size: 24),
-                        const SizedBox(width: 8),
-                        const Text(
+                        SizedBox(width: 8),
+                        Text(
                           'Watch Ad to Remove Ads',
                           style: TextStyle(
                             fontSize: 16,
@@ -825,7 +828,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                               isAdsRemoved
                                   ? 'Banner ads removed for 24 hours!'
                                   : 'Watch 3 ads to remove banner ads for 24 hours',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 14,
                                 color: AppTheme.textSecondary,
                               ),
@@ -849,7 +852,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                                       children: [
                                         Text(
                                           'Progress: $adsWatched / 3 ads',
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontSize: 12,
                                             color: AppTheme.textSecondary,
                                             fontWeight: FontWeight.w500,
@@ -857,7 +860,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                                         ),
                                         Text(
                                           '${((adsWatched / 3) * 100).toStringAsFixed(0)}%',
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontSize: 12,
                                             color: Colors.amber,
                                             fontWeight: FontWeight.w600,
@@ -874,7 +877,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                                         backgroundColor: AppTheme.textTertiary
                                             .withOpacity(0.2),
                                         valueColor:
-                                            AlwaysStoppedAnimation<Color>(
+                                            const AlwaysStoppedAnimation<Color>(
                                               Colors.amber,
                                             ),
                                       ),
@@ -929,15 +932,15 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
+                    const Row(
                       children: [
                         Icon(
                           Icons.workspace_premium,
                           color: AppTheme.primaryRed,
                           size: 24,
                         ),
-                        const SizedBox(width: 8),
-                        const Text(
+                        SizedBox(width: 8),
+                        Text(
                           'Unlock Premium Reader',
                           style: TextStyle(
                             fontSize: 16,
@@ -1006,14 +1009,14 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                                     width: 1,
                                   ),
                                 ),
-                                child: Row(
+                                child: const Row(
                                   children: [
                                     Icon(
                                       Icons.check_circle,
                                       color: Colors.green,
                                       size: 20,
                                     ),
-                                    const SizedBox(width: 8),
+                                    SizedBox(width: 8),
                                     Expanded(
                                       child: Text(
                                         'Premium Reader is active!',
@@ -1028,7 +1031,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                                 ),
                               )
                             else ...[
-                              Text(
+                              const Text(
                                 'Watch 6 ads to unlock premium reader features',
                                 style: TextStyle(
                                   fontSize: 14,
@@ -1054,7 +1057,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                                       children: [
                                         Text(
                                           'Progress: $adsWatched / 6 ads',
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontSize: 12,
                                             color: AppTheme.textSecondary,
                                             fontWeight: FontWeight.w500,
@@ -1062,7 +1065,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                                         ),
                                         Text(
                                           '${((adsWatched / 6) * 100).toStringAsFixed(0)}%',
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontSize: 12,
                                             color: AppTheme.primaryRed,
                                             fontWeight: FontWeight.w600,
@@ -1079,7 +1082,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                                         backgroundColor: AppTheme.textTertiary
                                             .withOpacity(0.2),
                                         valueColor:
-                                            AlwaysStoppedAnimation<Color>(
+                                            const AlwaysStoppedAnimation<Color>(
                                               AppTheme.primaryRed,
                                             ),
                                       ),
@@ -1261,7 +1264,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
         children: [
-          Icon(
+          const Icon(
             Icons.check_circle_outline,
             size: 16,
             color: AppTheme.primaryRed,
@@ -1270,7 +1273,10 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           Expanded(
             child: Text(
               text,
-              style: TextStyle(fontSize: 13, color: AppTheme.textSecondary),
+              style: const TextStyle(
+                fontSize: 13,
+                color: AppTheme.textSecondary,
+              ),
             ),
           ),
         ],

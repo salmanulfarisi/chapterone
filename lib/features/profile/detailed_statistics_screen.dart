@@ -42,12 +42,12 @@ class DetailedStatisticsScreen extends ConsumerWidget {
       ),
       body: statisticsAsync.when(
         data: (stats) => _buildStatisticsContent(context, stats),
-        loading: () => Center(
+        loading: () => const Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const CircularProgressIndicator(color: AppTheme.primaryRed),
-              const SizedBox(height: 16),
+              CircularProgressIndicator(color: AppTheme.primaryRed),
+              SizedBox(height: 16),
               Text(
                 'Loading your reading statistics...',
                 style: TextStyle(color: AppTheme.textSecondary),
@@ -59,13 +59,13 @@ class DetailedStatisticsScreen extends ConsumerWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
+              const Icon(
                 Icons.error_outline,
                 size: 64,
                 color: AppTheme.textSecondary,
               ),
               const SizedBox(height: 16),
-              Text(
+              const Text(
                 'Error loading statistics',
                 style: TextStyle(
                   fontSize: 18,
@@ -76,7 +76,7 @@ class DetailedStatisticsScreen extends ConsumerWidget {
               const SizedBox(height: 8),
               Text(
                 error.toString(),
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 14,
                   color: AppTheme.textSecondary,
                 ),
@@ -99,7 +99,10 @@ class DetailedStatisticsScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildStatisticsContent(BuildContext context, Map<String, dynamic> stats) {
+  Widget _buildStatisticsContent(
+    BuildContext context,
+    Map<String, dynamic> stats,
+  ) {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
       child: Column(
@@ -143,17 +146,14 @@ class DetailedStatisticsScreen extends ConsumerWidget {
 
   Widget _buildHeaderCard(BuildContext context, Map<String, dynamic> stats) {
     final weeklyHours = stats['timeSpent']?['weekly']?['hours'] ?? 0.0;
-    
+
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [
-            AppTheme.primaryRed,
-            AppTheme.primaryRed.withOpacity(0.7),
-          ],
+          colors: [AppTheme.primaryRed, AppTheme.primaryRed.withOpacity(0.7)],
         ),
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
@@ -166,15 +166,11 @@ class DetailedStatisticsScreen extends ConsumerWidget {
       ),
       child: Column(
         children: [
-          const Icon(
-            Icons.auto_stories,
-            size: 48,
-            color: Colors.white,
-          ),
+          const Icon(Icons.auto_stories, size: 48, color: Colors.white),
           const SizedBox(height: 16),
-          Text(
+          const Text(
             'Your Reading Wrapped',
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
               color: Colors.white,
@@ -194,7 +190,10 @@ class DetailedStatisticsScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildTimeSpentSection(BuildContext context, Map<String, dynamic> stats) {
+  Widget _buildTimeSpentSection(
+    BuildContext context,
+    Map<String, dynamic> stats,
+  ) {
     final timeSpent = stats['timeSpent'] ?? {};
     final weekly = timeSpent['weekly'] ?? {};
     final monthly = timeSpent['monthly'] ?? {};
@@ -230,7 +229,10 @@ class DetailedStatisticsScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildChaptersReadSection(BuildContext context, Map<String, dynamic> stats) {
+  Widget _buildChaptersReadSection(
+    BuildContext context,
+    Map<String, dynamic> stats,
+  ) {
     final chaptersRead = stats['chaptersRead'] ?? {};
     final total = chaptersRead['total'] ?? 0;
     final unique = chaptersRead['unique'] ?? 0;
@@ -262,15 +264,18 @@ class DetailedStatisticsScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildGenreBreakdownSection(BuildContext context, Map<String, dynamic> stats) {
+  Widget _buildGenreBreakdownSection(
+    BuildContext context,
+    Map<String, dynamic> stats,
+  ) {
     final genreBreakdown = (stats['genreBreakdown'] as List<dynamic>?) ?? [];
-    
+
     if (genreBreakdown.isEmpty) {
       return _buildSectionCard(
         title: 'Genre Breakdown',
         icon: Icons.pie_chart,
-        child: Padding(
-          padding: const EdgeInsets.all(24),
+        child: const Padding(
+          padding: EdgeInsets.all(24),
           child: Text(
             'No genre data available',
             style: TextStyle(color: AppTheme.textSecondary),
@@ -305,7 +310,7 @@ class DetailedStatisticsScreen extends ConsumerWidget {
                     Colors.indigo,
                     Colors.cyan,
                   ];
-                  
+
                   return PieChartSectionData(
                     value: percentage.toDouble(),
                     title: '$percentage%',
@@ -334,7 +339,7 @@ class DetailedStatisticsScreen extends ConsumerWidget {
                   Container(
                     width: 12,
                     height: 12,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: AppTheme.primaryRed,
                       shape: BoxShape.circle,
                     ),
@@ -351,7 +356,7 @@ class DetailedStatisticsScreen extends ConsumerWidget {
                   ),
                   Text(
                     '$percentage%',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
                       color: AppTheme.textPrimary,
@@ -366,7 +371,10 @@ class DetailedStatisticsScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildReadingStreakSection(BuildContext context, Map<String, dynamic> stats) {
+  Widget _buildReadingStreakSection(
+    BuildContext context,
+    Map<String, dynamic> stats,
+  ) {
     final streak = stats['readingStreak'] ?? {};
     final current = streak['current'] ?? 0;
     final longest = streak['longest'] ?? 0;
@@ -398,9 +406,12 @@ class DetailedStatisticsScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildMostReadMangaSection(BuildContext context, Map<String, dynamic> stats) {
+  Widget _buildMostReadMangaSection(
+    BuildContext context,
+    Map<String, dynamic> stats,
+  ) {
     final mostRead = (stats['mostReadManga'] as List<dynamic>?) ?? [];
-    
+
     if (mostRead.isEmpty) {
       return const SizedBox.shrink();
     }
@@ -453,7 +464,7 @@ class DetailedStatisticsScreen extends ConsumerWidget {
                       const SizedBox(height: 4),
                       Text(
                         '${manga['chaptersRead'] ?? 0} chapters • ${(manga['readingTimeHours'] ?? 0.0).toStringAsFixed(1)} hours',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 12,
                           color: AppTheme.textSecondary,
                         ),
@@ -469,9 +480,12 @@ class DetailedStatisticsScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildDailyActivitySection(BuildContext context, Map<String, dynamic> stats) {
+  Widget _buildDailyActivitySection(
+    BuildContext context,
+    Map<String, dynamic> stats,
+  ) {
     final dailyActivity = (stats['dailyActivity'] as List<dynamic>?) ?? [];
-    
+
     if (dailyActivity.isEmpty) {
       return const SizedBox.shrink();
     }
@@ -494,9 +508,7 @@ class DetailedStatisticsScreen extends ConsumerWidget {
             maxY: maxChapters > 0 ? maxChapters + 2 : 10,
             barTouchData: BarTouchData(
               enabled: true,
-              touchTooltipData: BarTouchTooltipData(
-                tooltipRoundedRadius: 8,
-              ),
+              touchTooltipData: BarTouchTooltipData(tooltipRoundedRadius: 8),
             ),
             titlesData: FlTitlesData(
               show: true,
@@ -504,11 +516,12 @@ class DetailedStatisticsScreen extends ConsumerWidget {
                 sideTitles: SideTitles(
                   showTitles: true,
                   getTitlesWidget: (value, meta) {
-                    if (value.toInt() % 5 == 0 && value.toInt() < dailyActivity.length) {
+                    if (value.toInt() % 5 == 0 &&
+                        value.toInt() < dailyActivity.length) {
                       final date = dailyActivity[value.toInt()]['date'];
                       return Text(
                         date.split('-')[2],
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 10,
                           color: AppTheme.textSecondary,
                         ),
@@ -526,7 +539,7 @@ class DetailedStatisticsScreen extends ConsumerWidget {
                   getTitlesWidget: (value, meta) {
                     return Text(
                       value.toInt().toString(),
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 10,
                         color: AppTheme.textSecondary,
                       ),
@@ -556,7 +569,7 @@ class DetailedStatisticsScreen extends ConsumerWidget {
               final index = entry.key;
               final day = entry.value;
               final chapters = (day['chaptersRead'] ?? 0).toDouble();
-              
+
               return BarChartGroupData(
                 x: index,
                 barRods: [
@@ -577,9 +590,12 @@ class DetailedStatisticsScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildFavoriteGenresSection(BuildContext context, Map<String, dynamic> stats) {
+  Widget _buildFavoriteGenresSection(
+    BuildContext context,
+    Map<String, dynamic> stats,
+  ) {
     final favoriteGenres = (stats['favoriteGenres'] as List<dynamic>?) ?? [];
-    
+
     if (favoriteGenres.isEmpty) {
       return const SizedBox.shrink();
     }
@@ -591,7 +607,7 @@ class DetailedStatisticsScreen extends ConsumerWidget {
         children: favoriteGenres.map((genre) {
           final genreName = genre['genre'] ?? 'Unknown';
           final hours = (genre['hours'] ?? 0.0).toStringAsFixed(1);
-          
+
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 8),
             child: Row(
@@ -621,7 +637,7 @@ class DetailedStatisticsScreen extends ConsumerWidget {
                 ),
                 Text(
                   '$hours hours',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
                     color: AppTheme.primaryRed,
@@ -645,9 +661,7 @@ class DetailedStatisticsScreen extends ConsumerWidget {
       decoration: BoxDecoration(
         color: AppTheme.cardBackground,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: AppTheme.textSecondary.withOpacity(0.1),
-        ),
+        border: Border.all(color: AppTheme.textSecondary.withOpacity(0.1)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -677,15 +691,18 @@ class DetailedStatisticsScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildStatCard(String label, String value, IconData icon, Color color) {
+  Widget _buildStatCard(
+    String label,
+    String value,
+    IconData icon,
+    Color color,
+  ) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: AppTheme.darkBackground,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: color.withOpacity(0.3),
-        ),
+        border: Border.all(color: color.withOpacity(0.3)),
       ),
       child: Column(
         children: [
@@ -693,7 +710,7 @@ class DetailedStatisticsScreen extends ConsumerWidget {
           const SizedBox(height: 8),
           Text(
             value,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
               color: AppTheme.textPrimary,
@@ -702,14 +719,10 @@ class DetailedStatisticsScreen extends ConsumerWidget {
           const SizedBox(height: 4),
           Text(
             label,
-            style: TextStyle(
-              fontSize: 12,
-              color: AppTheme.textSecondary,
-            ),
+            style: const TextStyle(fontSize: 12, color: AppTheme.textSecondary),
           ),
         ],
       ),
     );
   }
 }
-

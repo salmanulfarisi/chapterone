@@ -247,7 +247,7 @@ class _GenresTab extends ConsumerWidget {
                         ),
                         Text(
                           '${genre.count} sessions',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: AppTheme.textSecondary,
                             fontSize: 12,
                           ),
@@ -263,7 +263,7 @@ class _GenresTab extends ConsumerWidget {
                         backgroundColor: AppTheme.cardBackground.withOpacity(
                           0.3,
                         ),
-                        valueColor: AlwaysStoppedAnimation<Color>(
+                        valueColor: const AlwaysStoppedAnimation<Color>(
                           AppTheme.primaryRed,
                         ),
                       ),
@@ -274,14 +274,14 @@ class _GenresTab extends ConsumerWidget {
                       children: [
                         Text(
                           _formatTime(genre.totalTime),
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: AppTheme.textSecondary,
                             fontSize: 12,
                           ),
                         ),
                         Text(
                           '${genre.totalChapters} chapters',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: AppTheme.textSecondary,
                             fontSize: 12,
                           ),
@@ -364,7 +364,7 @@ class _PatternsTab extends ConsumerWidget {
                               ),
                               Text(
                                 '${day.count} sessions',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: AppTheme.textSecondary,
                                   fontSize: 12,
                                 ),
@@ -379,7 +379,7 @@ class _PatternsTab extends ConsumerWidget {
                               minHeight: 6,
                               backgroundColor: AppTheme.cardBackground
                                   .withOpacity(0.3),
-                              valueColor: AlwaysStoppedAnimation<Color>(
+                              valueColor: const AlwaysStoppedAnimation<Color>(
                                 AppTheme.primaryRed,
                               ),
                             ),
@@ -433,7 +433,7 @@ class _PatternsTab extends ConsumerWidget {
                                 minHeight: 6,
                                 backgroundColor: AppTheme.cardBackground
                                     .withOpacity(0.3),
-                                valueColor: AlwaysStoppedAnimation<Color>(
+                                valueColor: const AlwaysStoppedAnimation<Color>(
                                   AppTheme.primaryRed,
                                 ),
                               ),
@@ -442,7 +442,7 @@ class _PatternsTab extends ConsumerWidget {
                           const SizedBox(width: 8),
                           Text(
                             '${hour.count}',
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: AppTheme.textSecondary,
                               fontSize: 12,
                             ),
@@ -536,7 +536,7 @@ class _CompletionTab extends ConsumerWidget {
                     const SizedBox(height: 4),
                     Text(
                       '${completion.chaptersRead} / ${completion.totalChapters} chapters',
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: AppTheme.textSecondary,
                         fontSize: 12,
                       ),
@@ -560,7 +560,7 @@ class _CompletionTab extends ConsumerWidget {
                     const SizedBox(height: 4),
                     Text(
                       '${completion.completionPercentage.toStringAsFixed(1)}%',
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: AppTheme.textSecondary,
                         fontSize: 10,
                       ),
@@ -704,14 +704,14 @@ class _DropoffTab extends ConsumerWidget {
                         const SizedBox(height: 4),
                         Text(
                           'Chapter ${point.chapterNumber}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: AppTheme.textSecondary,
                             fontSize: 12,
                           ),
                         ),
                         Text(
                           '${point.dropoffCount} drop-offs • ${point.avgCompletionPercentage.toStringAsFixed(1)}% avg completion',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: AppTheme.textSecondary,
                             fontSize: 11,
                           ),
@@ -721,10 +721,13 @@ class _DropoffTab extends ConsumerWidget {
                     trailing: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.trending_down, color: AppTheme.primaryRed),
+                        const Icon(
+                          Icons.trending_down,
+                          color: AppTheme.primaryRed,
+                        ),
                         Text(
                           '${point.dropoffCount}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: AppTheme.primaryRed,
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
@@ -781,7 +784,10 @@ class _StatCard extends StatelessWidget {
             const SizedBox(height: 4),
             Text(
               title,
-              style: TextStyle(color: AppTheme.textSecondary, fontSize: 12),
+              style: const TextStyle(
+                color: AppTheme.textSecondary,
+                fontSize: 12,
+              ),
               textAlign: TextAlign.center,
             ),
           ],
@@ -817,7 +823,7 @@ class _SummaryItem extends StatelessWidget {
         const SizedBox(height: 4),
         Text(
           label,
-          style: TextStyle(color: AppTheme.textSecondary, fontSize: 12),
+          style: const TextStyle(color: AppTheme.textSecondary, fontSize: 12),
           textAlign: TextAlign.center,
         ),
       ],

@@ -56,7 +56,10 @@ class _ChapterManagementScreenState
         CustomSnackbar.success(context, 'Chapter deleted successfully');
         ref.invalidate(mangaChaptersProvider(widget.mangaId));
       } catch (e) {
-        CustomSnackbar.error(context, 'Failed to delete chapter: ${e.toString()}');
+        CustomSnackbar.error(
+          context,
+          'Failed to delete chapter: ${e.toString()}',
+        );
       }
     }
   }
@@ -85,7 +88,10 @@ class _ChapterManagementScreenState
             const Text('Chapter Management'),
             Text(
               widget.mangaTitle,
-              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.normal),
+              style: const TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.normal,
+              ),
               overflow: TextOverflow.ellipsis,
             ),
           ],
@@ -126,7 +132,9 @@ class _ChapterManagementScreenState
               : chapters;
 
           // Sort by chapter number (descending - newest first)
-          filteredChapters.sort((a, b) => b.chapterNumber.compareTo(a.chapterNumber));
+          filteredChapters.sort(
+            (a, b) => b.chapterNumber.compareTo(a.chapterNumber),
+          );
 
           if (filteredChapters.isEmpty) {
             return Center(
@@ -134,7 +142,9 @@ class _ChapterManagementScreenState
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(
-                    query.isNotEmpty ? Icons.search_off : Icons.menu_book_outlined,
+                    query.isNotEmpty
+                        ? Icons.search_off
+                        : Icons.menu_book_outlined,
                     size: 64,
                     color: AppTheme.textSecondary,
                   ),
@@ -178,7 +188,11 @@ class _ChapterManagementScreenState
                       const SizedBox(height: 4),
                       Row(
                         children: [
-                          Icon(Icons.image, size: 14, color: AppTheme.textSecondary),
+                          const Icon(
+                            Icons.image,
+                            size: 14,
+                            color: AppTheme.textSecondary,
+                          ),
                           const SizedBox(width: 4),
                           Text(
                             '${chapter.pages.length} pages',
@@ -186,7 +200,11 @@ class _ChapterManagementScreenState
                           ),
                           if (chapter.views != null) ...[
                             const SizedBox(width: 16),
-                            Icon(Icons.visibility, size: 14, color: AppTheme.textSecondary),
+                            const Icon(
+                              Icons.visibility,
+                              size: 14,
+                              color: AppTheme.textSecondary,
+                            ),
                             const SizedBox(width: 4),
                             Text(
                               '${chapter.views} views',
@@ -199,7 +217,11 @@ class _ChapterManagementScreenState
                         const SizedBox(height: 4),
                         Row(
                           children: [
-                            Icon(Icons.calendar_today, size: 14, color: AppTheme.textSecondary),
+                            const Icon(
+                              Icons.calendar_today,
+                              size: 14,
+                              color: AppTheme.textSecondary,
+                            ),
                             const SizedBox(width: 4),
                             Text(
                               _formatDate(chapter.releaseDate),
@@ -215,9 +237,16 @@ class _ChapterManagementScreenState
                       PopupMenuItem(
                         child: const Row(
                           children: [
-                            Icon(Icons.delete, size: 18, color: AppTheme.primaryRed),
+                            Icon(
+                              Icons.delete,
+                              size: 18,
+                              color: AppTheme.primaryRed,
+                            ),
                             SizedBox(width: 8),
-                            Text('Delete', style: TextStyle(color: AppTheme.primaryRed)),
+                            Text(
+                              'Delete',
+                              style: TextStyle(color: AppTheme.primaryRed),
+                            ),
                           ],
                         ),
                         onTap: () => _deleteChapter(chapter.id),
@@ -254,15 +283,20 @@ class _ChapterManagementScreenState
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(Icons.error_outline, size: 64, color: AppTheme.textSecondary),
+              const Icon(
+                Icons.error_outline,
+                size: 64,
+                color: AppTheme.textSecondary,
+              ),
               const SizedBox(height: 16),
-              Text(
+              const Text(
                 'Error loading chapters',
-                style: const TextStyle(color: AppTheme.textSecondary),
+                style: TextStyle(color: AppTheme.textSecondary),
               ),
               const SizedBox(height: 8),
               ElevatedButton(
-                onPressed: () => ref.invalidate(mangaChaptersProvider(widget.mangaId)),
+                onPressed: () =>
+                    ref.invalidate(mangaChaptersProvider(widget.mangaId)),
                 child: const Text('Retry'),
               ),
             ],
@@ -272,4 +306,3 @@ class _ChapterManagementScreenState
     );
   }
 }
-

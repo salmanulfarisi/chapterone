@@ -43,7 +43,7 @@ class MangaCard extends StatelessWidget {
                   children: [
                     cover != null
                         ? ClipRRect(
-                            borderRadius: BorderRadius.only(
+                            borderRadius: const BorderRadius.only(
                               topLeft: Radius.circular(8),
                               topRight: Radius.circular(8),
                             ),

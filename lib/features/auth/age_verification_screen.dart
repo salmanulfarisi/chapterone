@@ -21,7 +21,8 @@ class AgeVerificationScreen extends ConsumerStatefulWidget {
   });
 
   @override
-  ConsumerState<AgeVerificationScreen> createState() => _AgeVerificationScreenState();
+  ConsumerState<AgeVerificationScreen> createState() =>
+      _AgeVerificationScreenState();
 }
 
 class _AgeVerificationScreenState extends ConsumerState<AgeVerificationScreen> {
@@ -44,9 +45,9 @@ class _AgeVerificationScreenState extends ConsumerState<AgeVerificationScreen> {
 
   Future<void> _showRewardedAd() async {
     if (_showingAd || _adShown) return;
-    
+
     setState(() => _showingAd = true);
-    
+
     try {
       final adService = AdService.instance;
       bool adWatched = false;
@@ -70,7 +71,9 @@ class _AgeVerificationScreenState extends ConsumerState<AgeVerificationScreen> {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text('Please watch the ad to proceed with age verification'),
+              content: Text(
+                'Please watch the ad to proceed with age verification',
+              ),
             ),
           );
         }
@@ -129,10 +132,7 @@ class _AgeVerificationScreenState extends ConsumerState<AgeVerificationScreen> {
       }
     } catch (e) {
       if (mounted) {
-        CustomSnackbar.error(
-          context,
-          'Failed to verify age: ${e.toString()}',
-        );
+        CustomSnackbar.error(context, 'Failed to verify age: ${e.toString()}');
       }
     } finally {
       if (mounted) {
@@ -180,21 +180,15 @@ class _AgeVerificationScreenState extends ConsumerState<AgeVerificationScreen> {
                 const SizedBox(height: 16),
 
                 // Description
-                Text(
+                const Text(
                   'This content is restricted to users who are 18 years or older.',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: AppTheme.textSecondary,
-                  ),
+                  style: TextStyle(fontSize: 16, color: AppTheme.textSecondary),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 8),
-                Text(
+                const Text(
                   'By continuing, you confirm that you are at least 18 years old.',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: AppTheme.textSecondary,
-                  ),
+                  style: TextStyle(fontSize: 14, color: AppTheme.textSecondary),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 24),
@@ -211,15 +205,15 @@ class _AgeVerificationScreenState extends ConsumerState<AgeVerificationScreen> {
                         width: 1,
                       ),
                     ),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Icon(
+                        Icon(
                           Icons.info_outline,
                           size: 16,
                           color: AppTheme.primaryRed,
                         ),
-                        const SizedBox(width: 8),
+                        SizedBox(width: 8),
                         Text(
                           'Watch an ad to proceed',
                           style: TextStyle(
@@ -267,18 +261,11 @@ class _AgeVerificationScreenState extends ConsumerState<AgeVerificationScreen> {
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(
-                          Icons.check_circle,
-                          size: 16,
-                          color: Colors.green,
-                        ),
+                        Icon(Icons.check_circle, size: 16, color: Colors.green),
                         SizedBox(width: 8),
                         Text(
                           'Ad watched successfully',
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.green,
-                          ),
+                          style: TextStyle(fontSize: 12, color: Colors.green),
                         ),
                       ],
                     ),
@@ -299,7 +286,9 @@ class _AgeVerificationScreenState extends ConsumerState<AgeVerificationScreen> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      disabledBackgroundColor: AppTheme.primaryRed.withOpacity(0.5),
+                      disabledBackgroundColor: AppTheme.primaryRed.withOpacity(
+                        0.5,
+                      ),
                     ),
                     child: _isVerifying
                         ? const SizedBox(
@@ -307,7 +296,9 @@ class _AgeVerificationScreenState extends ConsumerState<AgeVerificationScreen> {
                             height: 20,
                             child: CircularProgressIndicator(
                               strokeWidth: 2,
-                              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                Colors.white,
+                              ),
                             ),
                           )
                         : Text(
@@ -332,7 +323,7 @@ class _AgeVerificationScreenState extends ConsumerState<AgeVerificationScreen> {
                       context.go('/home');
                     }
                   },
-                  child: Text(
+                  child: const Text(
                     'Cancel',
                     style: TextStyle(
                       fontSize: 14,
@@ -348,4 +339,3 @@ class _AgeVerificationScreenState extends ConsumerState<AgeVerificationScreen> {
     );
   }
 }
-

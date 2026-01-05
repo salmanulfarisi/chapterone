@@ -151,10 +151,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               child: const Icon(Icons.menu_book, size: 20, color: Colors.white),
             ),
             const SizedBox(width: 8),
-            Flexible(
+            const Flexible(
               child: Text(
                 'ChapterOne',
-                style: const TextStyle(
+                style: TextStyle(
                   fontWeight: FontWeight.w700,
                   letterSpacing: 1.2,
                 ),
@@ -319,7 +319,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               );
             },
             loading: () => const ShimmerMangaList(),
-            error: (error, stack) => SizedBox(
+            error: (error, stack) => const SizedBox(
               height: 200,
               child: Center(
                 child: Text(
@@ -467,10 +467,21 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                         right: 0,
                                         child: Container(
                                           height: 3,
-                                          decoration: BoxDecoration(
+                                          decoration: const BoxDecoration(
                                             color: AppTheme.cardBackground,
-                                            borderRadius:
-                                                const BorderRadius.only(
+                                            borderRadius: BorderRadius.only(
+                                              bottomLeft: Radius.circular(8),
+                                              bottomRight: Radius.circular(8),
+                                            ),
+                                          ),
+                                          child: FractionallySizedBox(
+                                            widthFactor:
+                                                chaptersRead / totalChapters,
+                                            alignment: Alignment.centerLeft,
+                                            child: Container(
+                                              decoration: const BoxDecoration(
+                                                color: AppTheme.primaryRed,
+                                                borderRadius: BorderRadius.only(
                                                   bottomLeft: Radius.circular(
                                                     8,
                                                   ),
@@ -478,21 +489,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                                     8,
                                                   ),
                                                 ),
-                                          ),
-                                          child: FractionallySizedBox(
-                                            widthFactor:
-                                                chaptersRead / totalChapters,
-                                            alignment: Alignment.centerLeft,
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                color: AppTheme.primaryRed,
-                                                borderRadius:
-                                                    const BorderRadius.only(
-                                                      bottomLeft:
-                                                          Radius.circular(8),
-                                                      bottomRight:
-                                                          Radius.circular(8),
-                                                    ),
                                               ),
                                             ),
                                           ),
@@ -596,7 +592,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                 Text(
                                   'You Might Also Like',
                                   style: Theme.of(context)
-                                      .textTheme.headlineMedium
+                                      .textTheme
+                                      .headlineMedium
                                       ?.copyWith(
                                         fontSize: 18,
                                         fontWeight: FontWeight.w700,
@@ -612,8 +609,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         height: 240,
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
-                          padding:
-                              const EdgeInsets.symmetric(horizontal: 16.0),
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
                           itemCount: youMightLike.length,
                           itemBuilder: (context, index) {
                             final item = youMightLike[index];
@@ -672,7 +668,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           const SizedBox(height: 24),
 
           // Native Ad (with unique key to prevent duplicate GlobalKey errors)
-          NativeAdWidget(key: const ValueKey('home_native_ad'), height: 300),
+          const NativeAdWidget(key: ValueKey('home_native_ad'), height: 300),
           const SizedBox(height: 24),
         ],
       ),
@@ -739,7 +735,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
           return Container(
             width: double.infinity,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
@@ -756,9 +752,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     placeholder: (context, url) => Container(
                       color: AppTheme.cardBackground,
                       child: const Center(
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2,
-                        ),
+                        child: CircularProgressIndicator(strokeWidth: 2),
                       ),
                     ),
                     errorWidget: (_, __, ___) => Container(
@@ -972,7 +966,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         return Container(
           height: 420,
           width: double.infinity,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
@@ -989,9 +983,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   placeholder: (context, url) => Container(
                     color: AppTheme.cardBackground,
                     child: const Center(
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                      ),
+                      child: CircularProgressIndicator(strokeWidth: 2),
                     ),
                   ),
                   errorWidget: (_, __, ___) => Container(

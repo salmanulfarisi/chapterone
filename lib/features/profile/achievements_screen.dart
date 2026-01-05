@@ -24,7 +24,7 @@ class AchievementsScreen extends ConsumerWidget {
       body: userAchievementsAsync.when(
         data: (unlockedAchievements) {
           final unlockedTypes = unlockedAchievements.map((a) => a.type).toSet();
-          
+
           return CustomScrollView(
             slivers: [
               // Progress Header
@@ -55,7 +55,7 @@ class AchievementsScreen extends ConsumerWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              const Text(
                                 'Your Progress',
                                 style: TextStyle(
                                   fontSize: 14,
@@ -105,7 +105,7 @@ class AchievementsScreen extends ConsumerWidget {
                           value: progress['progress'] as double,
                           minHeight: 8,
                           backgroundColor: AppTheme.cardBackground,
-                          valueColor: AlwaysStoppedAnimation<Color>(
+                          valueColor: const AlwaysStoppedAnimation<Color>(
                             AppTheme.primaryRed,
                           ),
                         ),
@@ -119,51 +119,41 @@ class AchievementsScreen extends ConsumerWidget {
               SliverPadding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 sliver: SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) {
-                      final achievement = allAchievements[index];
-                      final isUnlocked = unlockedTypes.contains(achievement.type);
-                      final unlockedAchievement = isUnlocked
-                          ? unlockedAchievements.firstWhere(
-                              (a) => a.type == achievement.type,
-                            )
-                          : null;
+                  delegate: SliverChildBuilderDelegate((context, index) {
+                    final achievement = allAchievements[index];
+                    final isUnlocked = unlockedTypes.contains(achievement.type);
+                    final unlockedAchievement = isUnlocked
+                        ? unlockedAchievements.firstWhere(
+                            (a) => a.type == achievement.type,
+                          )
+                        : null;
 
-                      return _AchievementCard(
-                        achievement: achievement,
-                        isUnlocked: isUnlocked,
-                        unlockedAt: unlockedAchievement?.unlockedAt,
-                      );
-                    },
-                    childCount: allAchievements.length,
-                  ),
+                    return _AchievementCard(
+                      achievement: achievement,
+                      isUnlocked: isUnlocked,
+                      unlockedAt: unlockedAchievement?.unlockedAt,
+                    );
+                  }, childCount: allAchievements.length),
                 ),
               ),
-              const SliverToBoxAdapter(
-                child: SizedBox(height: 16),
-              ),
+              const SliverToBoxAdapter(child: SizedBox(height: 16)),
             ],
           );
         },
-        loading: () => const Center(
-          child: CircularProgressIndicator(),
-        ),
-        error: (error, stack) => Center(
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (error, stack) => const Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(
+              Icon(
                 Icons.error_outline,
                 size: 64,
                 color: AppTheme.textSecondary,
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16),
               Text(
                 'Failed to load achievements',
-                style: TextStyle(
-                  color: AppTheme.textSecondary,
-                  fontSize: 16,
-                ),
+                style: TextStyle(color: AppTheme.textSecondary, fontSize: 16),
               ),
             ],
           ),
@@ -217,7 +207,7 @@ class _AchievementCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final rarityColor = _getRarityColor(achievement.rarity);
-    
+
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
@@ -262,7 +252,7 @@ class _AchievementCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 16),
-              
+
               // Achievement Info
               Expanded(
                 child: Column(
@@ -317,7 +307,7 @@ class _AchievementCard extends StatelessWidget {
                       const SizedBox(height: 8),
                       Row(
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.check_circle,
                             size: 14,
                             color: Colors.green,
@@ -325,7 +315,7 @@ class _AchievementCard extends StatelessWidget {
                           const SizedBox(width: 4),
                           Text(
                             'Unlocked ${DateFormat('MMM d, y').format(unlockedAt!)}',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 12,
                               color: Colors.green,
                               fontWeight: FontWeight.w500,
@@ -335,14 +325,14 @@ class _AchievementCard extends StatelessWidget {
                       ),
                     ] else if (!isUnlocked) ...[
                       const SizedBox(height: 8),
-                      Row(
+                      const Row(
                         children: [
                           Icon(
                             Icons.lock_outline,
                             size: 14,
                             color: AppTheme.textTertiary,
                           ),
-                          const SizedBox(width: 4),
+                          SizedBox(width: 4),
                           Text(
                             'Locked',
                             style: TextStyle(
@@ -363,4 +353,3 @@ class _AchievementCard extends StatelessWidget {
     );
   }
 }
-

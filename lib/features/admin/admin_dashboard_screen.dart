@@ -92,13 +92,17 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
                   ),
                   child: Row(
                     children: [
-                      Icon(Icons.error_outline, color: Colors.red, size: 20),
+                      const Icon(
+                        Icons.error_outline,
+                        color: Colors.red,
+                        size: 20,
+                      ),
                       const SizedBox(width: 12),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
+                            const Text(
                               'Backend is Offline',
                               style: TextStyle(
                                 color: Colors.red,
@@ -123,8 +127,8 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
                               .read(backendHealthProvider.notifier)
                               .checkHealth();
                         },
-                        icon: Icon(Icons.refresh, size: 16),
-                        label: Text('Retry'),
+                        icon: const Icon(Icons.refresh, size: 16),
+                        label: const Text('Retry'),
                         style: TextButton.styleFrom(
                           foregroundColor: Colors.red,
                         ),

@@ -40,10 +40,10 @@ class _MangaNotificationSettingsDialogState
             children: [
               Row(
                 children: [
-                  Expanded(
+                  const Expanded(
                     child: Text(
                       'Notification Settings',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
@@ -58,7 +58,10 @@ class _MangaNotificationSettingsDialogState
               const SizedBox(height: 8),
               Text(
                 widget.mangaTitle,
-                style: TextStyle(fontSize: 14, color: AppTheme.textSecondary),
+                style: const TextStyle(
+                  fontSize: 14,
+                  color: AppTheme.textSecondary,
+                ),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),

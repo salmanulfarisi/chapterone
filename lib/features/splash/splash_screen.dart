@@ -675,7 +675,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                   // Progress percentage
                   Text(
                     '${(_loadingProgress * 100).toInt()}%',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 12,
                       color: AppTheme.textSecondary,
                       fontWeight: FontWeight.w500,

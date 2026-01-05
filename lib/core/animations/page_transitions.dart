@@ -41,16 +41,11 @@ class CustomSlidePageTransitionBuilder extends PageTransitionsBuilder {
     const end = Offset.zero;
     const curve = Curves.easeInOutCubic;
 
-    var tween = Tween(begin: begin, end: end).chain(
-      CurveTween(curve: curve),
-    );
+    final tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
 
     return SlideTransition(
       position: animation.drive(tween),
-      child: FadeTransition(
-        opacity: animation,
-        child: child,
-      ),
+      child: FadeTransition(opacity: animation, child: child),
     );
   }
 }
@@ -66,10 +61,7 @@ class CustomFadePageTransitionBuilder extends PageTransitionsBuilder {
     Widget child,
   ) {
     return FadeTransition(
-      opacity: CurvedAnimation(
-        parent: animation,
-        curve: Curves.easeInOut,
-      ),
+      opacity: CurvedAnimation(parent: animation, curve: Curves.easeInOut),
       child: child,
     );
   }
@@ -86,14 +78,8 @@ class CustomScalePageTransitionBuilder extends PageTransitionsBuilder {
     Widget child,
   ) {
     return ScaleTransition(
-      scale: CurvedAnimation(
-        parent: animation,
-        curve: Curves.easeInOutCubic,
-      ),
-      child: FadeTransition(
-        opacity: animation,
-        child: child,
-      ),
+      scale: CurvedAnimation(parent: animation, curve: Curves.easeInOutCubic),
+      child: FadeTransition(opacity: animation, child: child),
     );
   }
 }
@@ -112,14 +98,10 @@ class HeroMangaTransition extends PageTransitionsBuilder {
       opacity: animation,
       child: ScaleTransition(
         scale: Tween<double>(begin: 0.9, end: 1.0).animate(
-          CurvedAnimation(
-            parent: animation,
-            curve: Curves.easeOutCubic,
-          ),
+          CurvedAnimation(parent: animation, curve: Curves.easeOutCubic),
         ),
         child: child,
       ),
     );
   }
 }
-
